@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="posl_khfwxy_spd" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="480"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="certno" class="java.lang.String"/>
+	<field name="acctno" class="java.lang.String"/>
+	<field name="bankname" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="year" class="java.lang.String"/>
+	<field name="month" class="java.lang.String"/>
+	<field name="day" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[扣款授权书]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="703" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-1" width="555" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[致：国民信托有限公司（即扣款发起方，以下简称“甲方”） ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="64" width="555" height="98"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[本人（自然人）作为授权人授权甲方通过中金支付有限公司（合法成立的第三方支付机构）或甲方合作的银行（包括但不限于上海银行股份有限公司等）、其他合法成立的第三方支付机构（包括但不限于银联网络支付公司、通联支付网络服务股份有限公司等）（以下简称“第三方支付机构”）及其合作银行（本授权书中为被扣款方开户银行）从本人以下账户中扣划本人与甲方签署的《贷款合同》（合同编号【   】）项下本人应付款项（以下简称“本人应付款项”）。为执行上述约定以保障各方的权益，本人特此授权及承诺如下：
+本人已指定本人名下的如下账户为付款账户（以下简称“被扣款方账户”）：
+被扣款方户名（必须同本人名称相同）： ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="48" width="183" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{certno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="78" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方名称：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="15" width="140" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="48" width="284" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方有效证件号码：（身份证或其他有效身份证件号码）：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="313" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方有效证件类型：（身份证或其他有效身份证件）：身份证]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="162" width="87" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="178" width="78" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方账号： ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="194" width="157" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{acctno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="274" width="553" height="278"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[本人同意由甲方通过第三方支付机构及其合作银行（本授权书中为被扣款方开户银行）从以上指定账户中主动扣收本人应付款项，届时被扣款方开户银行无须获得本人的同意也无须事先通知本人，并无需本人向被扣款方开户银行进行扣款授权。
+本人承担因被扣款方账户余额不足或被查封冻结导致无法按时足额扣款而导致的任何法律责任。本人保证上述资金扣收符合国家法律法规，本人不会利用上述扣收操作开展任何违法犯罪活动。本人同意为完成资金代扣操作，甲方有权合理使用并向第三方支付机构及其合作银行（本授权书中为被扣款方开户银行）披露本授权书全部内容及其他为完成资金代扣操作而必要的本人信息。
+本授权书自签署之日起即持续有效，直至本人与甲方一致书面同意变更（对于本授权书的变更仅限于变更被扣款方账户信息，但变更后账户必须同本人名称相同）、终止本授权书，并由甲方将变更、终止本授权书的书面说明（以下简称“说明”）向第三方支付机构提供并由第三方支付机构实际收到说明之日，本授权书变更、终止。
+本人确保上述账户在委托扣款日账户状态正常（即非冻结、销户、挂失等）且账户内余额充足，甲方或其委托的第三方支付机构/银行可实现成功扣款。因还款日本人账户状态不正常或者账户内余额不足导致扣款不成功的，视为本人在《贷款合同》项下的违约，由此产生的逾期违约责任均由本人承担。
+本授权书项下的委托期限自《贷款合同》生效日起至本人在《贷款合同》项下约定的各项贷款本息及其他款项（如有）全部偿还完毕之日止。本人在此特别声明：本人对于甲方及其委托的第三方支付机构/银行在本授权书项下对本人款项的划扣，不提出任何异议。甲方将《贷款合同》下的债权转让给新的受让人的，本人不可撤销的同意授权新的债权受让人及其委托的第三方支付机构/银行委托扣划的权利。
+
+本授权书适用中华人民共和国法律。
+中金支付有限公司的客服电话：010-58903377、010-58903399，服务时间为工作日9:00-17:00。
+其他第三方支付机构的联系方式请咨询相关服务商。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="628" width="123" height="15"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方（自然人）签字：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="628" width="140" height="15"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="210" width="103" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方开户银行：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="226" width="62" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bankname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="226" width="103" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[____分行____支行 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="242" width="204" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被扣款方开户银行所在省份及城市： ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="643" width="25" height="18"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{day}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="643" width="18" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[月]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="643" width="42" height="18"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="643" width="18" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[年]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="643" width="25" height="18"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{month}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="133" y="643" width="18" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="258" width="157" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[____省（自治区/直辖市）____市]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

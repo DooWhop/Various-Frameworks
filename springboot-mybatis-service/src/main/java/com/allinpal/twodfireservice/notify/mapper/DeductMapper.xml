@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.allinpal.twodfireservice.notify.mapper.DeductMapper" >
+	<resultMap id="DeductSplitMap" type="com.allinpal.twodfireservice.notify.domain.DeductSplit" >
+		<result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="orig_record_no" property="origRecordNo" jdbcType="VARCHAR" />
+	    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+	    <result column="deduct_date" property="deductDate" jdbcType="VARCHAR" />
+	    <result column="cur_date" property="curDate" jdbcType="VARCHAR" />
+	    <result column="busi_type" property="busiType" jdbcType="VARCHAR" />
+	    <result column="serial_no" jdbcType="VARCHAR" property="serialNo" />
+	    <result column="trans_amount" property="transAmount" jdbcType="DECIMAL" />
+	    <result column="split_amount" property="splitAmount" jdbcType="DECIMAL" />
+	    <result column="split_count" property="splitCount" jdbcType="DECIMAL" />
+	    <result column="split_num" property="splitNum" jdbcType="DECIMAL" />
+	    <result column="trans_date" property="transDate" jdbcType="BIGINT" />
+	    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+	    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+	    <result column="acct_name" property="acctName" jdbcType="VARCHAR" />
+	    <result column="acct_no" property="acctNo" jdbcType="VARCHAR" />
+	    <result column="acct_cat" property="acctCat" jdbcType="VARCHAR" />
+	    <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+	    <result column="rtn_code" property="rtnCode" jdbcType="VARCHAR" />
+	    <result column="rtn_msg" property="rtnMsg" jdbcType="VARCHAR" />
+	    <result column="proc_state" property="procState" jdbcType="VARCHAR" />
+	    <result column="hand_record_no" property="handRecordNo" jdbcType="VARCHAR" />
+	    <result column="tpp_recon_flag" property="tppReconFlag" jdbcType="VARCHAR" />
+	    <result column="remark" property="remark" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+	</resultMap>
+	<select id="queryLoanUseReq" resultType="com.allinpal.twodfireservice.notify.domain.DeductLoanUseReq">
+		select record_no as recordNo, credit_record_no as creditRecordNo, acct_id as acctId, org_code as orgCode, 
+			prod_code as prodCode, lmt_serno as lmtSerno, bill_no as billNo, use_date as useDate, 
+		    retu_acno as retuAcno, loan_cust_name as loanCustName, loan_certtype_name as loanCerttypeName, 
+		    loan_cert_no as loanCertNo, loan_cust_addr as loanCustAddr, loan_phone as loanPhone, 
+		    app_amt as appAmt, base_amount as baseAmount, appl_term as applTerm, app_start_date as appStartDate, 
+		    app_end_date as appEndDate, loan_yrate as loanYrate, loan_balance as loanBalance, 
+		    service_fee as serviceFee, manager_fee as managerFee, loan_use as loanUse, 
+		    loan_payway as loanPayway, loan_overup_rate as loanOverupRate, use_sign_flag as useSignFlag, 
+		    use_sign_time as useSignTime, status, loan_date as loanDate
+	  	from 2dfire.t_loan_use_req 
+	  	where record_no = #{recordNo}
+	  	order by create_time desc
+	</select>
+
+	<select id="queryDeductChargeReg" resultType="com.allinpal.twodfireservice.notify.domain.DeductChargeReg">
+		select charge.record_no as recordNo, charge.use_record_no as useRecordNo, charge.acct_id as acctId, charge.cur_date as curDate, 
+				charge.base_amount as baseAmount, charge.service_fee as serviceFee, charge.service_rate as serviceRate, 
+			    charge.manager_fee as managerFee, charge.manager_rate as managerRate, charge.tolamount, charge.deduct_count as deductCount, 
+			    charge.proc_state as procState, charge.recon_flag as reconFlag, charge.recon_time as reconTime, 
+			    charge.remark, charge.create_uid as createUid, charge.create_time as createTime, charge.last_modify_uid as lastModifyUid, 
+			    charge.last_modify_time as lastModifyTime, acct.prod_code as prodCode, card.bank_iden_name as bankIdenName, card.bank_iden_code as bankIdenCode,  
+			    card.acct_no as acctNo, card.acct_name as acctName, card.cert_type as certType, card.cert_no as certNo, card.hp_no as hpNo
+			from 2dfire.t_charge_reg charge
+			left join 2dfire.t_prod_acct acct
+			on charge.acct_id = acct.acct_id
+			left join 2dfire.t_user user
+			on acct.user_id = user.user_id
+			left join 2dfire.t_user_card card
+			on user.user_id = card.user_id
+			where  charge.use_record_no = #{useRecordNo}
+			and acct.status = #{cardStatus}
+	</select>
+	
+	<select id="queryDeductChargeRegByUseRecNo" resultType="com.allinpal.twodfireservice.notify.domain.DeductChargeReg">
+		select charge.record_no as recordNo, charge.use_record_no as useRecordNo, charge.acct_id as acctId, charge.cur_date as curDate, 
+				charge.base_amount as baseAmount, charge.service_fee as serviceFee, charge.service_rate as serviceRate, 
+			    charge.manager_fee as managerFee, charge.manager_rate as managerRate, charge.tolamount, charge.deduct_count as deductCount, 
+			    charge.proc_state as procState, charge.recon_flag as reconFlag, charge.recon_time as reconTime, 
+			    charge.remark, charge.create_uid as createUid, charge.create_time as createTime, charge.last_modify_uid as lastModifyUid, 
+			    charge.last_modify_time as lastModifyTime
+			from 2dfire.t_charge_reg charge
+			where charge.record_no = #{recordNo}
+	</select>
+	
+	<select id="queryDeductLimit" resultType="com.allinpal.twodfireservice.notify.domain.DeductLimit">
+		select record_no as recordNo, deduct_channel as deductChannel, busi_type as deductChannel, 
+		bank_code as bankCode, bank_name as bankName, once_deduct_amt as onceDeductAmt, day_deduct_count as dayDeductCount, 
+		day_deduct_amt as dayDeductAmt, status as status
+		from 2dfire.t_deduct_limit
+		where deduct_channel = #{deductChannel}
+		and busi_type = #{busiType}
+		and bank_code = #{bankCode}
+		and status = #{status}
+	</select>
+	
+	<update id="updateLoanUseReq" parameterType="com.allinpal.twodfireservice.notify.domain.DeductLoanUseReq">
+		update 2dfire.t_loan_use_req  
+		set 
+		status = #{newStatus,jdbcType=VARCHAR},
+		<if test="loanDate != null">
+			loan_date = #{loanDate,jdbcType=VARCHAR},
+		</if>
+		<if test="describle != null">
+			describle = #{describle,jdbcType=VARCHAR}, 
+		</if>
+		last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}, 
+		last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+		where record_no = #{recordNo} and credit_record_no = #{creditRecordNo} and status = #{status}
+		<if test="oldLastModifyTime != null">
+			and last_modify_time = #{oldLastModifyTime}
+		</if>
+	</update>
+	
+	<update id="updateChargeReg" parameterType="com.allinpal.twodfireservice.notify.domain.DeductChargeReg">
+		update 2dfire.t_charge_reg 
+		set 
+		proc_state = #{newProcState,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR}, 
+		<if test="deductCount != null">
+			deduct_count = #{deductCount,jdbcType=INTEGER},
+		</if>
+		last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}, 
+		last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+		where use_record_no = #{useRecordNo} and proc_state = #{procState}
+		<if test="oldLastModifyTime != null">
+			and last_modify_time = #{oldLastModifyTime}
+		</if>
+	</update>
+	
+	<update id="updateDeductSplit" parameterType="com.allinpal.twodfireservice.notify.domain.DeductSplit">
+		update 2dfire.t_deduct_split set 
+		<if test="newProcState != null">
+			proc_state = #{newProcState,jdbcType=VARCHAR}, 
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}, 
+		last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+		where record_no = #{recordNo}  
+		and proc_state = #{procState}
+		<if test="origRecordNo != null">
+			and orig_record_no = #{origRecordNo} 
+		</if>
+		<if test="oldLastModifyTime != null">
+			and last_modify_time = #{oldLastModifyTime}
+		</if>
+	</update>
+	
+	<select id="queryDeductSplitByState" parameterType="com.allinpal.twodfireservice.notify.domain.DeductSplit" resultMap="DeductSplitMap">
+		select record_no, orig_record_no, prod_code, deduct_date, cur_date, busi_type, serial_no, trans_amount, 
+	    split_amount, split_count, split_num, trans_date, trans_type, bank_code, acct_name, 
+	    acct_no, acct_cat, id_no, rtn_code, rtn_msg, proc_state, hand_record_no, tpp_recon_flag, 
+	    remark, create_uid, create_time, last_modify_uid, last_modify_time
+		from 2dfire.t_deduct_split
+		where 1=1
+		<if test="procState != null">
+			and proc_state = #{procState}
+		</if>
+		<if test="origRecordNo != null">
+			and orig_record_no = #{origRecordNo}
+		</if>
+		<if test="notProcState != null">
+			and proc_state != #{notProcState}
+		</if>
+		<if test="prodCode !=null">
+			and prod_code = #{prodCode}
+		</if>
+		<if test="sortField != null">
+			order by ${sortField}
+		</if>
+	</select>
+	
+	<select id="queryChargeRegByProcState" resultType="com.allinpal.twodfireservice.notify.domain.DeductChargeReg">
+		select charge.record_no as recordNo, charge.use_record_no as useRecordNo, charge.acct_id as acctId, charge.cur_date as curDate, 
+				charge.base_amount as baseAmount, charge.service_fee as serviceFee, charge.service_rate as serviceRate, 
+			    charge.manager_fee as managerFee, charge.manager_rate as managerRate, charge.tolamount, charge.deduct_count as deductCount, 
+			    charge.proc_state as procState, charge.recon_flag as reconFlag, charge.recon_time as reconTime, 
+			    charge.remark, charge.create_uid as createUid, charge.create_time as createTime, charge.last_modify_uid as lastModifyUid, 
+			    charge.last_modify_time as lastModifyTime
+			from 2dfire.t_charge_reg charge
+			where  proc_state = #{procState} 
+			<![CDATA[and deduct_count <= #{deductCount} ]]>
+	</select>
+	
+	<insert id="insertDeductSplit" parameterType="com.allinpal.twodfireservice.notify.domain.DeductSplit">
+	    insert into 2dfire.t_deduct_split
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        record_no,
+	      </if>
+	      <if test="origRecordNo != null" >
+	        orig_record_no,
+	      </if>
+	      <if test="prodCode != null" >
+	        prod_code,
+	      </if>
+	      <if test="deductDate != null" >
+	        deduct_date,
+	      </if>
+	      <if test="curDate != null" >
+	        cur_date,
+	      </if>
+	      <if test="busiType != null" >
+	        busi_type,
+	      </if>
+	      <if test="serialNo != null">
+	        serial_no,
+	      </if>
+	      <if test="transAmount != null" >
+	        trans_amount,
+	      </if>
+	      <if test="splitAmount != null" >
+	        split_amount,
+	      </if>
+	      <if test="splitCount != null" >
+	        split_count,
+	      </if>
+	      <if test="splitNum != null" >
+	        split_num,
+	      </if>
+	      <if test="transDate != null" >
+	        trans_date,
+	      </if>
+	      <if test="transType != null" >
+	        trans_type,
+	      </if>
+	      <if test="bankCode != null" >
+	        bank_code,
+	      </if>
+	      <if test="acctName != null" >
+	        acct_name,
+	      </if>
+	      <if test="acctNo != null" >
+	        acct_no,
+	      </if>
+	      <if test="acctCat != null" >
+	        acct_cat,
+	      </if>
+	      <if test="idNo != null" >
+	        id_no,
+	      </if>
+	      <if test="rtnCode != null" >
+	        rtn_code,
+	      </if>
+	      <if test="rtnMsg != null" >
+	        rtn_msg,
+	      </if>
+	      <if test="procState != null" >
+	        proc_state,
+	      </if>
+	      <if test="handRecordNo != null" >
+	        hand_record_no,
+	      </if>
+	      <if test="tppReconFlag != null" >
+	        tpp_recon_flag,
+	      </if>
+	      <if test="remark != null" >
+	        remark,
+	      </if>
+	      <if test="createUid != null" >
+	        create_uid,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        #{recordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="origRecordNo != null" >
+	        #{origRecordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="prodCode != null" >
+	        #{prodCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deductDate != null" >
+	        #{deductDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="curDate != null" >
+	        #{curDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="busiType != null" >
+	        #{busiType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="serialNo != null">
+	        #{serialNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="transAmount != null" >
+	        #{transAmount,jdbcType=DECIMAL},
+	      </if>
+	      <if test="splitAmount != null" >
+	        #{splitAmount,jdbcType=DECIMAL},
+	      </if>
+	      <if test="splitCount != null" >
+	        #{splitCount,jdbcType=DECIMAL},
+	      </if>
+	      <if test="splitNum != null" >
+	        #{splitNum,jdbcType=DECIMAL},
+	      </if>
+	      <if test="transDate != null" >
+	        #{transDate,jdbcType=BIGINT},
+	      </if>
+	      <if test="transType != null" >
+	        #{transType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="bankCode != null" >
+	        #{bankCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acctName != null" >
+	        #{acctName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acctNo != null" >
+	        #{acctNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acctCat != null" >
+	        #{acctCat,jdbcType=VARCHAR},
+	      </if>
+	      <if test="idNo != null" >
+	        #{idNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="rtnCode != null" >
+	        #{rtnCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="rtnMsg != null" >
+	        #{rtnMsg,jdbcType=VARCHAR},
+	      </if>
+	      <if test="procState != null" >
+	        #{procState,jdbcType=VARCHAR},
+	      </if>
+	      <if test="handRecordNo != null" >
+	        #{handRecordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="tppReconFlag != null" >
+	        #{tppReconFlag,jdbcType=VARCHAR},
+	      </if>
+	      <if test="remark != null" >
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createUid != null" >
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+	</insert>
+	
+	<insert id="insertChargeReg" parameterType="com.allinpal.twodfireservice.notify.domain.DeductChargeReg">
+		insert into 2dfire.t_charge_reg
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        record_no,
+	      </if>
+	      <if test="useRecordNo != null" >
+	        use_record_no,
+	      </if>
+	      <if test="acctId != null" >
+	        acct_id,
+	      </if>
+	      <if test="curDate != null" >
+	        cur_date,
+	      </if>
+	      <if test="baseAmount != null" >
+	        base_amount,
+	      </if>
+	      <if test="serviceFee != null" >
+	        service_fee,
+	      </if>
+	      <if test="serviceRate != null" >
+	        service_rate,
+	      </if>
+	      <if test="managerFee != null" >
+	        manager_fee,
+	      </if>
+	      <if test="managerRate != null" >
+	        manager_rate,
+	      </if>
+	      <if test="tolamount != null" >
+	        tolamount,
+	      </if>
+	      <if test="deductCount != null" >
+	        deduct_count,
+	      </if>
+	      <if test="procState != null" >
+	        proc_state,
+	      </if>
+	      <if test="reconFlag != null" >
+	        recon_flag,
+	      </if>
+	      <if test="reconTime != null" >
+	        recon_time,
+	      </if>
+	      <if test="remark != null" >
+	        remark,
+	      </if>
+	      <if test="createUid != null" >
+	        create_uid,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        #{recordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="useRecordNo != null" >
+	        #{useRecordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="acctId != null" >
+	        #{acctId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="curDate != null" >
+	        #{curDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="baseAmount != null" >
+	        #{baseAmount,jdbcType=DECIMAL},
+	      </if>
+	      <if test="serviceFee != null" >
+	        #{serviceFee,jdbcType=DECIMAL},
+	      </if>
+	      <if test="serviceRate != null" >
+	        #{serviceRate,jdbcType=DECIMAL},
+	      </if>
+	      <if test="managerFee != null" >
+	        #{managerFee,jdbcType=DECIMAL},
+	      </if>
+	      <if test="managerRate != null" >
+	        #{managerRate,jdbcType=DECIMAL},
+	      </if>
+	      <if test="tolamount != null" >
+	        #{tolamount,jdbcType=DECIMAL},
+	      </if>
+	      <if test="deductCount != null" >
+	        #{deductCount,jdbcType=INTEGER},
+	      </if>
+	      <if test="procState != null" >
+	        #{procState,jdbcType=CHAR},
+	      </if>
+	      <if test="reconFlag != null" >
+	        #{reconFlag,jdbcType=CHAR},
+	      </if>
+	      <if test="reconTime != null" >
+	        #{reconTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="remark != null" >
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createUid != null" >
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+	</insert>
+</mapper>

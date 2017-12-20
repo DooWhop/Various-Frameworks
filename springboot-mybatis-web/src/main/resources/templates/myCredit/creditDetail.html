@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>我的火融e贷款</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+	</head>
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left" ></a>
+			<h1 class="wx-title">我的火融e贷款</h1>
+		</header>
+		<form id="myForm" name='myForm' action="" method="post">
+			<input type="hidden" name="creditReqStr" id="creditReqStr" th:value='${creditReqStr}' />
+			<input type="hidden" name="recordNo" id="recordNo" th:value='${creditReq.recordNo}' />
+			<input type="hidden" name="merchantNo" id="merchantNo" th:value='${merchantNo}' />
+			<input type="hidden" name="prodCode" id="prodCode" th:value='${prodCode}' />
+			<input type="hidden" name="mobile" id="mobile" th:value='${mobile}' />
+			<input type="hidden" name="useRecordNo" id="useRecordNo" th:value='${creditReq.useRecordNo}' />
+			<input type="hidden" name="signDate" id="signDate" th:value='${signDate}' />
+			<input type="hidden" name="protocolNoWTKK" id="protocolNoWTKK" th:value='${protocolNoWTKK}' />
+			<input type="hidden" name="protocolNoKHFW" id="protocolNoKHFW" th:value='${protocolNoKHFW}' />
+			<input type="hidden" name="protocolType" id="protocolType"  value='' />
+			<input type="hidden" name="useTerm" id="useTerm" value='06M' />
+			<input type="hidden" name="lmtSerno" th:value='${creditReq.lmtSerno}' />
+			<input type="hidden" name="userId" th:value='${creditReq.userId}' />
+		</form>
+		<span th:if="${'0' == totalCount}"> 
+			<div class="wx-content">
+			<!--没有授信样式-->
+				<div class="card-empty">
+					<span class="icon-img-empty"></span>
+					<div class="cl3 mt20">您还没有任何授信申请</div>
+					<a class="wx-btn wx-btnh" onclick="initRedirect()">立即申请</a>
+				</div>
+			</div>
+		</span>
+		
+		<div class="fixBottom bgf fh1 pb20">
+			<span th:if="${'0' != effective}"> 
+				<span th:if="${'3' == creditReq.status2dfire}"> 
+					<div class="wx-btn wx-btnh" onclick="useAction()">用款申请</div>
+				</span>
+				<span th:if="${'4' == creditReq.status2dfire}">
+					<span th:if="${'4' == creditReq.statusUse}">
+					<div class="wx-btn wx-btnh" onclick="queryRepayPlan()">查看还款计划</div></span> 
+				</span>
+			</span>
+		</div>
+		<div class="wx-content wx-tab-content">
+			<div th:switch="${creditReq.status2dfire}">
+			<span th:case='3'>
+			<span th:if="${null != creditReq.twelveMonthAmt}"> 
+				<span th:if="${0.00 != creditReq.twelveMonthAmt}"> 
+					<ul class="wx-tab wx-tab-fill-reversal">
+						<li class="active" wx-aria-controls="6M" value="6">6个月</li>
+							<li wx-aria-controls="12M" value="12">12个月</li>
+					</ul>
+				</span>
+			</span>
+				<div class="wx-tab-pane active" id="6M">
+					<div class="tc top top-account clf">
+						<div class="f12 mt20 pt12 opa7">贷款金额(元)</div>
+						<div class="f36 mt6"><span th:text="${creditReq.sixMonthAmt}"/></div>
+						<div class="f12 mt16 opa7"><span th:text="${currDate}"/>至<span th:text="${sixEndDate}"/></div>
+					</div>
+					<ul class="wx-formlist">
+						<li class="wkbox">
+							<div class="autoW tl cl9">申请状态</div>
+							<div class="autoW tr cl3">
+								<span th:if="${'1' == creditReq.status}">申请未完成</span>
+								<span th:if="${'2' == creditReq.status}">申请失效</span>
+								<span th:if="${'3' == creditReq.status}">审批中</span>
+								<span th:if="${'4' == creditReq.status}">审批失败</span>
+								<span th:if="${'5' == creditReq.status}">审批通过</span>
+								<span th:if="${'6' == creditReq.status}">额度生效</span>
+								<span th:if="${'7' == creditReq.status}">额度失效</span>
+								<span th:if="${'8' == creditReq.status}">审批作废</span>
+								<span th:if="${'9' == creditReq.status}">额度暂停</span>
+							</div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">申请日期</div>
+							<div class="autoW tr cl3"><span th:text="${createTime}"/></div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">还款方式</div>
+							<div class="autoW tr cl3">等额本息</div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">管理费(元)</div>
+							<div class="autoW tr cl3"><span th:text="${#numbers.formatDecimal(creditReq.sixManageFee, 1, 2)}"/></div>
+						</li>
+					</ul>
+				</div>
+				 
+				<div class="wx-tab-pane " id="12M">
+					<div class="tc top top-account clf">
+						<div class="f12 mt20 pt12 opa7">贷款金额(元)</div>
+						<div class="f36 mt6"><span th:text="${creditReq.twelveMonthAmt}"/></div>
+						<div class="f12 mt16 opa7"><span th:text="${currDate}"/>至<span th:text="${twelveEndDate}"/></div>
+					</div>
+					<ul class="wx-formlist">
+						<li class="wkbox">
+							<div class="autoW tl cl9">申请状态</div>
+							<div class="autoW tr cl3">
+								<span th:if="${'1' == creditReq.status}">申请未完成</span>
+								<span th:if="${'2' == creditReq.status}">申请失效</span>
+								<span th:if="${'3' == creditReq.status}">审批中</span>
+								<span th:if="${'4' == creditReq.status}">审批失败</span>
+								<span th:if="${'5' == creditReq.status}">审批通过</span>
+								<span th:if="${'6' == creditReq.status}">额度生效</span>
+								<span th:if="${'7' == creditReq.status}">额度失效</span>
+								<span th:if="${'8' == creditReq.status}">审批作废</span>
+								<span th:if="${'9' == creditReq.status}">额度暂停</span>
+							</div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">申请日期</div>
+							<div class="autoW tr cl3"><span th:text="${createTime}"/></div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">还款方式</div>
+							<div class="autoW tr cl3">等额本息</div>
+						</li>
+						<li class="wkbox">
+							<div class="autoW tl cl9">管理费(元)</div>
+							<div class="autoW tr cl3"><span th:text="${#numbers.formatDecimal(creditReq.twelveManageFee, 1, 2)}"/></div>
+						</li>
+					</ul>
+				</div>
+			</span>
+			<span th:case='4'>
+				<div class="tc top top-account clf">
+					<div class="f12 mt20 pt12 opa7">贷款金额(元)</div>
+					<div class="f36 mt6"><span th:text="${creditReq.useAmt}"/></div>
+					<div class="f12 mt16 opa7"><span th:text="${creditReq.lmtStartDate}"/>至<span th:text="${creditReq.lmtEndDate}"/></div>
+				</div>
+				<ul class="wx-formlist">
+					<li class="wkbox">
+						<div class="autoW tl cl9">申请状态</div>
+						<div class="autoW tr cl3">
+							<span th:if="${'1' == creditReq.statusUse}">审批中</span>
+							<span th:if="${'2' == creditReq.statusUse}">审批失败</span>
+							<span th:if="${'3' == creditReq.statusUse}">审批通过</span>
+							<span th:if="${'4' == creditReq.statusUse}">已放款</span>
+							<span th:if="${'5' == creditReq.statusUse}">已结清</span>
+							<span th:if="${'6' == creditReq.statusUse}">已逾期</span>
+							<span th:if="${'7' == creditReq.statusUse}">审批作废</span>
+							<span th:if="${'8' == creditReq.statusUse}">贷款作废</span>
+							<span th:if="${'9' == creditReq.statusUse}">已签约</span>
+							<span th:if="${'11' == creditReq.statusUse}">放款失败</span>
+							<span th:if="${'12' == creditReq.statusUse}">放款中</span>
+							<span th:if="${'13' == creditReq.statusUse}">未签约</span>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">申请日期</div>
+						<div class="autoW tr cl3"><span th:text="${createTime}"/></div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">还款方式</div>
+						<div class="autoW tr cl3">等额本息</div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">管理费(元)</div>
+						<div class="autoW tr cl3"><span th:text="${#numbers.formatDecimal(creditReq.managerFee, 1, 2)}"/></div>
+					</li>
+				</ul>
+			</span>
+			<span th:case='*'>
+				<div class="tc top top-account clf">
+					<div class="f12 mt20 pt12 opa7">贷款金额(元)</div>
+					<div class="f36 mt6"><span th:text="${creditReq.applAmt}"/></div>
+					<div class="f12 mt16 opa7"><span th:text="${createTime}"/></div>
+				</div>
+				<ul class="wx-formlist">
+					<li class="wkbox">
+						<div class="autoW tl cl9">申请状态</div>
+						<div class="autoW tr cl3">
+							<span th:if="${'1' == creditReq.status}">申请未完成</span>
+							<span th:if="${'2' == creditReq.status}">申请失效</span>
+							<span th:if="${'4' == creditReq.status}">审批失败</span>
+							<span th:if="${'6' == creditReq.status}">额度生效</span>
+							<span th:if="${'7' == creditReq.status}">额度失效</span>
+							<span th:if="${'8' == creditReq.status}">审批作废</span>
+							<span th:if="${'9' == creditReq.status}">额度暂停</span>
+							<span th:if="${'13' == creditReq.status}">贷前拒绝</span>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">申请日期</div>
+						<div class="autoW tr cl3"><span th:text="${createTime}"/></div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">还款方式</div>
+						<div class="autoW tr cl3">等额本息</div>
+					</li>
+					<li class="wkbox">
+						<div class="autoW tl cl9">管理费(元)</div>
+						<div class="autoW tr cl3">0.00</div>
+					</li>
+				</ul>
+			</span>
+			</div>
+			<span th:if="${'0' != totalCount}"> 
+				<span th:if="${'0' != effective}">
+				<span th:if="${'3' == creditReq.status2dfire}">  
+					<div class="wx-checkbox">
+						<label>
+				      		<input type="checkbox" checked="checked"/><i></i> 阅读并同意
+				      		 <a onclick="showProtocol(1)" class="cllan">《火融e客户服务协议》</a>
+				      		 <a onclick="showProtocol(0)" class="cllan">《火融e委托扣款协议书》</a>
+				    	</label>
+					</div>
+				</span>
+				</span>
+			</span>
+		</div>
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript">
+			$('li').bind('click',function(){ 
+				var useTerm = $('.active').val();
+				if(6 === useTerm){
+					$("#useTerm").val("06M");
+				}else if(12 === useTerm){
+					$("#useTerm").val("12M");
+				}
+			}); 
+			function initRedirect(){
+	      		$("#myForm").attr("action", "initRedirect");
+	      		$("#myForm").submit();
+			}
+			
+			function seeMyAccount() {
+	  		   $("#myForm").attr("action", "accountHome");
+	  		   $("#myForm").submit();
+			}
+			
+			function queryRepayPlan() {
+	  		   $("#myForm").attr("action", "queryRepayPlan");
+	  		   $("#myForm").submit();
+			}
+			
+			function showProtocol(protocolType){
+				$("#protocolType").val(protocolType);
+	  		    $("#myForm").attr("action", "showProtocol");
+	  		    $("#myForm").submit();
+			}
+			function useAction() {
+				var checked = true;
+				$('input[type="checkbox"]').each(function() {
+					if (!$(this).is(':checked')) {
+						alert('确认前请阅读并同意相关协议');
+						checked = false;
+					}
+				});
+				if (!checked) {
+					return false;
+				}
+				$("#myForm").attr("action", "drawApply");
+	      		$("#myForm").submit();
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinpal.twodfireservice.unknowService.mapper.ChargeRegMapper">
+  <resultMap id="ChargeRegResultMap" type="com.allinpal.twodfireservice.unknowService.domain.ChargeReg" >
+    <id column="record_no" property="recordNo" jdbcType="VARCHAR" />
+    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+    <result column="cur_date" property="curDate" jdbcType="VARCHAR" />
+    <result column="base_amount" property="baseAmount" jdbcType="DECIMAL" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="service_rate" property="serviceRate" jdbcType="DECIMAL" />
+    <result column="manager_fee" property="managerFee" jdbcType="DECIMAL" />
+    <result column="manager_rate" property="managerRate" jdbcType="DECIMAL" />
+    <result column="tolamount" property="tolamount" jdbcType="DECIMAL" />
+    <result column="deduct_count" property="deductCount" jdbcType="INTEGER" />
+    <result column="proc_state" property="procState" jdbcType="CHAR" />
+    <result column="recon_flag" property="reconFlag" jdbcType="CHAR" />
+    <result column="recon_time" property="reconTime" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+    <result column="status_Use" property="statusUse" jdbcType="CHAR" />
+  </resultMap>
+ 
+   <resultMap id="DrawResultMap" type="com.allinpal.twodfireservice.unknowService.domain.Draw">
+   	<result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+    <result column="credit_record_no" property="creditRecordNo" jdbcType="VARCHAR" />
+    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+    <result column="lmt_serno" property="lmtSerno" jdbcType="VARCHAR" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="use_date" property="useDate" jdbcType="VARCHAR" />
+    <result column="retu_acno" property="retuAcno" jdbcType="VARCHAR" />
+    <result column="loan_cust_name" property="loanCustName" jdbcType="VARCHAR" />
+    <result column="loan_certtype_name" property="loanCerttypeName" jdbcType="VARCHAR" />
+    <result column="loan_cert_no" property="loanCertNo" jdbcType="VARCHAR" />
+    <result column="loan_cust_addr" property="loanCustAddr" jdbcType="VARCHAR" />
+    <result column="loan_phone" property="loanPhone" jdbcType="VARCHAR" />
+   	<result column="app_amt" property="appAmt" jdbcType="DECIMAL" />
+   	<result column="base_amount" property="baseAmount" jdbcType="DECIMAL" />
+   	<result column="appl_term" property="applTerm" jdbcType="VARCHAR" />
+   	<result column="app_start_date" property="appStartDate" jdbcType="VARCHAR" />
+    <result column="app_end_date" property="appEndDate" jdbcType="VARCHAR" />
+    <result column="loan_yrate" property="loanYrate" jdbcType="DECIMAL" />
+    <result column="loan_balance" property="loanBalance" jdbcType="DECIMAL" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="manager_fee" property="managerFee" jdbcType="DECIMAL" />
+    <result column="loan_use" property="loanUse" jdbcType="VARCHAR" />
+    <result column="loan_payway" property="loanPayway" jdbcType="VARCHAR" />
+    <result column="loan_overup_rate" property="loanOverupRate" jdbcType="DECIMAL" />
+    <result column="use_sign_flag" property="useSignFlag" jdbcType="VARCHAR" />
+    <result column="use_sign_time" property="useSignTime" jdbcType="BIGINT" />
+    <result column="withhold_protocol" property="withholdProtocol" jdbcType="VARCHAR" />
+    <result column="withhold_protocol_time" property="withholdProtocolTime" jdbcType="BIGINT" />
+    <result column="borrow_protocol" property="borrowProtocol" jdbcType="VARCHAR" />
+    <result column="borrow_protocol_time" property="borrowProtocolTime" jdbcType="BIGINT" />
+    <result column="access_time" property="accessTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="fail_code" property="failCode" jdbcType="VARCHAR" />
+    <result column="describle" property="describle" jdbcType="VARCHAR" />
+    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+  </resultMap>
+	  
+  <select id="getchargeRegList" parameterType="com.allinpal.twodfireservice.unknowService.domain.ChargeReg" resultMap="ChargeRegResultMap">
+  	select A.*, B.status as status_Use
+  		from 2dfire.t_charge_reg A
+  		left join 2dfire.t_loan_use_req B on B.record_no = A.use_record_no
+  		where A.proc_state = #{procState} or B.status = #{statusUse}
+  </select>
+  
+  <select id="getDrawList" parameterType="com.allinpal.twodfireservice.unknowService.domain.Draw" resultMap="DrawResultMap" >
+  	select * from 2dfire.t_loan_use_req where status = #{status}
+  </select>
+</mapper>

@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinpal.twodfireservice.creditService.mapper.CreditMapper">
+  <resultMap id="CreditResultMap" type="com.allinpal.twodfireservice.creditService.domain.Credit">
+    <result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+    <result column="org_chl" property="orgChl" jdbcType="VARCHAR" />
+    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+    <result column="register_date" property="registerDate" jdbcType="VARCHAR" />
+    <result column="lmt_serno" property="lmtSerno" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="cert_type" property="certType" jdbcType="VARCHAR" />
+    <result column="cert_no" property="certNo" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="bank_acct_no" property="bankAcctNo" jdbcType="VARCHAR" />
+    <result column="appl_amt" property="applAmt" jdbcType="DECIMAL" />
+    <result column="six_month_amt" property="sixMonthAmt" jdbcType="DECIMAL" />
+    <result column="twelve_month_amt" property="twelveMonthAmt" jdbcType="DECIMAL" />
+    <result column="lmt_start_date" property="lmtStartDate" jdbcType="VARCHAR" />
+    <result column="lmt_end_date" property="lmtEndDate" jdbcType="VARCHAR" />
+    <result column="live_city" property="liveCity" jdbcType="VARCHAR" />
+    <result column="live_addr" property="liveAddr" jdbcType="VARCHAR" />
+    <result column="livest" property="livest" jdbcType="VARCHAR" />
+    <result column="mcht_city" property="mchtCity" jdbcType="VARCHAR" />
+    <result column="mcht_addr" property="mchtAddr" jdbcType="VARCHAR" />
+    <result column="marriag" property="marriag" jdbcType="CHAR" />
+    <result column="spouse_nm" property="spouseNm" jdbcType="VARCHAR" />
+    <result column="spouse_idtp" property="spouseIdtp" jdbcType="VARCHAR" />
+    <result column="spouse_idno" property="spouseIdno" jdbcType="VARCHAR" />
+    <result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+    <result column="highest_edu" property="highestEdu" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="status_2dfire" property="status2dfire" jdbcType="CHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="grant_no" property="grantNo" jdbcType="VARCHAR" />
+    <result column="grant_time" property="grantTime" jdbcType="BIGINT" />
+    <result column="pay_rate" property="payRate" jdbcType="DECIMAL" />
+    <result column="fail_code" property="failCode" jdbcType="VARCHAR" />
+    <result column="describle" property="describle" jdbcType="VARCHAR" />
+    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+    <result column="manager_fee" property="managerFee" jdbcType="VARCHAR" />
+    <result column="status_use" property="statusUse" jdbcType="VARCHAR" />
+    <result column="use_term" property="useTerm" jdbcType="VARCHAR" />
+    <result column="use_amt" property="useAmt" jdbcType="VARCHAR" />
+    <result column="cont_sign_flag" property="contSignFlag" jdbcType="VARCHAR" />
+    <result column="cont_sign_time" property="contSignTime" jdbcType="VARCHAR" />
+    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ProdAcctResultMap" type="com.allinpal.twodfireservice.creditService.domain.ProdAcct">
+    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_card_id" property="userCardId" jdbcType="VARCHAR" />
+    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+    <result column="legal_name" property="legalName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="cert_no" property="certNo" jdbcType="VARCHAR" />
+    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+    <result column="busi_cert_no" property="busiCertNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="expire_time" property="expireTime" jdbcType="BIGINT" />
+    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+  </resultMap>
+
+   <select id="getAcctByMerchantNo" parameterType="com.allinpal.twodfireservice.creditService.domain.ProdAcct" resultMap="ProdAcctResultMap">
+       select * from 2dfire.t_prod_acct 
+       		where merchant_no = #{merchantNo}
+        		and mobile = #{mobile}
+        		and prod_code = #{prodCode}
+        		and status = '1'
+   </select>
+   
+   <select id="getUserCard"  resultType="java.util.Map" parameterType="java.util.Map" >
+		select * from 2dfire.t_user_card where record_no = #{recordNo}
+   </select>
+   
+   <select id="getLicenseNo"  resultType="java.util.Map" parameterType="java.util.Map" >
+		select * from 2dfire.cal_2dfire_month_metadata 
+			where entity_id = #{entityId} order by create_time desc
+   </select>
+   
+   <select id="getUserById"  resultType="java.util.Map" parameterType="java.util.Map" >
+		select * from 2dfire.t_user 
+			where user_id = #{userId} order by create_time desc
+   </select>
+   
+   <insert id="saveLoanCreditReq" parameterType="com.allinpal.twodfireservice.creditService.domain.Credit">
+    insert into 2dfire.t_loan_credit_req
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        record_no,
+      </if>
+      <if test="orgChl != null">
+        org_chl,
+      </if>
+      <if test="acctId != null">
+        acct_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="prodCode != null">
+        prod_code,
+      </if>
+      <if test="merchantNo != null">
+        merchant_no,
+      </if>
+      <if test="licenseNo != null">
+        license_no,
+      </if>
+      <if test="registerDate != null">
+        register_date,
+      </if>
+      <if test="lmtSerno != null">
+        lmt_serno,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="custName != null">
+        cust_name,
+      </if>
+      <if test="certType != null">
+        cert_type,
+      </if>
+      <if test="certNo != null">
+        cert_no,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankCode != null">
+        bank_code,
+      </if>
+      <if test="bankAcctNo != null">
+        bank_acct_no,
+      </if>
+      <if test="applAmt != null">
+        appl_amt,
+      </if>
+      <if test="sixMonthAmt != null">
+        six_month_amt,
+      </if>
+      <if test="twelveMonthAmt != null">
+        twelve_month_amt,
+      </if>
+      <if test="lmtStartDate != null">
+        lmt_start_date,
+      </if>
+      <if test="lmtEndDate != null">
+        lmt_end_date,
+      </if>
+      <if test="liveCity != null">
+        live_city,
+      </if>
+      <if test="liveAddr != null">
+        live_addr,
+      </if>
+      <if test="livest != null">
+        livest,
+      </if>
+      <if test="mchtCity != null">
+        mcht_city,
+      </if>
+      <if test="mchtAddr != null">
+        mcht_addr,
+      </if>
+      <if test="marriag != null">
+        marriag,
+      </if>
+      <if test="spouseNm != null">
+        spouse_nm,
+      </if>
+      <if test="spouseIdtp != null">
+        spouse_idtp,
+      </if>
+      <if test="spouseIdno != null">
+        spouse_idno,
+      </if>
+      <if test="empPhone != null">
+        emp_phone,
+      </if>
+      <if test="highestEdu != null">
+        highest_edu,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="status2dfire != null">
+        status_2dfire,
+      </if>
+      <if test="contractNo != null">
+        contract_no,
+      </if>
+      <if test="grantNo != null">
+        grant_no,
+      </if>
+      <if test="grantTime != null">
+        grant_time,
+      </if>
+      <if test="payRate != null">
+        pay_rate,
+      </if>
+      <if test="contSignFlag != null">
+        cont_sign_flag,
+      </if>
+      <if test="contSignTime != null">
+        cont_sign_time,
+      </if>
+      <if test="failCode != null">
+        fail_code,
+      </if>
+      <if test="describle != null">
+        describle,
+      </if>
+      <if test="createUid != null">
+        create_uid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyUid != null">
+        last_modify_uid,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgChl != null">
+        #{orgChl,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null">
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="prodCode != null">
+        #{prodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null">
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null">
+        #{registerDate,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtSerno != null">
+        #{lmtSerno,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+        #{certType,jdbcType=CHAR},
+      </if>
+      <if test="certNo != null">
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcctNo != null">
+        #{bankAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applAmt != null">
+        #{applAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="sixMonthAmt != null">
+        #{sixMonthAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="twelveMonthAmt != null">
+        #{twelveMonthAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lmtStartDate != null">
+        #{lmtStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtEndDate != null">
+        #{lmtEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCity != null">
+        #{liveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="liveAddr != null">
+        #{liveAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="livest != null">
+        #{livest,jdbcType=VARCHAR},
+      </if>
+      <if test="mchtCity != null">
+        #{mchtCity,jdbcType=VARCHAR},
+      </if>
+      <if test="mchtAddr != null">
+        #{mchtAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="marriag != null">
+        #{marriag,jdbcType=CHAR},
+      </if>
+      <if test="spouseNm != null">
+        #{spouseNm,jdbcType=VARCHAR},
+      </if>
+      <if test="spouseIdtp != null">
+        #{spouseIdtp,jdbcType=VARCHAR},
+      </if>
+      <if test="spouseIdno != null">
+        #{spouseIdno,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhone != null">
+        #{empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="highestEdu != null">
+        #{highestEdu,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="status2dfire != null">
+        #{status2dfire,jdbcType=CHAR},
+      </if>
+      <if test="contractNo != null">
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="grantNo != null">
+        #{grantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="grantTime != null">
+        #{grantTime,jdbcType=BIGINT},
+      </if>
+      <if test="payRate != null">
+        #{payRate,jdbcType=DECIMAL},
+      </if>
+      <if test="contSignFlag != null">
+         #{contSignFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="contSignTime != null">
+         #{contSignTime,jdbcType=BIGINT},
+      </if>
+      <if test="failCode != null">
+        #{failCode,jdbcType=VARCHAR},
+      </if>
+      <if test="describle != null">
+        #{describle,jdbcType=VARCHAR},
+      </if>
+      <if test="createUid != null">
+        #{createUid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyUid != null">
+        #{lastModifyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+	<select id="getCreditList" parameterType="com.allinpal.twodfireservice.creditService.domain.Credit" resultMap="CreditResultMap">
+		select A.*  from 2dfire.t_loan_credit_req A
+			where 1=1
+		    <if test="recordNo != null" >
+		        AND A.record_no = #{recordNo,jdbcType=VARCHAR}
+		    </if>
+			<if test="orgChl != null" >
+			   AND A.org_chl = #{orgChl,jdbcType=VARCHAR}
+			</if>
+			<if test="acctId != null" >
+			   AND A.acct_id = #{acctId,jdbcType=VARCHAR}
+			</if>
+			<if test="userId != null" >
+			   AND A.user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="orgCode != null" >
+			  AND A.org_code = #{orgCode,jdbcType=VARCHAR}
+			</if>
+			<if test="prodCode != null" >
+			  AND A.prod_code = #{prodCode,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantNo != null" >
+			  AND A.merchant_no = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="licenseNo != null" >
+			  AND A.license_no = #{licenseNo,jdbcType=VARCHAR}
+			</if>
+	        <if test="registerDate != null">
+	          AND A.register_date = #{registerDate,jdbcType=VARCHAR}
+	        </if>
+			<if test="lmtSerno != null" >
+			  AND A.lmt_serno = #{lmtSerno,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null" >
+			  AND A.mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="custName != null" >
+			  AND A.cust_name = #{custName,jdbcType=VARCHAR}
+			</if>
+			<if test="certType != null" >
+			  AND A.cert_type = #{certType,jdbcType=VARCHAR}
+			</if>
+			<if test="certNo != null" >
+			  AND A.cert_no = #{certNo,jdbcType=VARCHAR}
+			</if>
+			<if test="bankName != null" >
+			  AND A.bank_name = #{bankName,jdbcType=VARCHAR}
+			</if>
+			<if test="bankCode != null" >
+			  AND A.bank_code = #{bankCode,jdbcType=VARCHAR}
+			</if>
+			<if test="bankAcctNo != null" >
+			  AND A.bank_acct_no = #{bankAcctNo,jdbcType=VARCHAR}
+			</if>
+			<if test="applAmt != null" >
+			  AND A.appl_amt = #{applAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="sixMonthAmt != null" >
+			  AND A.six_month_amt = #{sixMonthAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="twelveMonthAmt != null" >
+			  AND A.twelve_month_amt = #{twelveMonthAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="lmtStartDate != null" >
+			  AND A.lmt_start_date = #{lmtStartDate,jdbcType=VARCHAR}
+			</if>
+			<if test="lmtEndDate != null" >
+			  AND A.lmt_end_date = #{lmtEndDate,jdbcType=VARCHAR}
+			</if>
+			<if test="liveCity != null" >
+			  AND A.live_city = #{liveCity,jdbcType=VARCHAR}
+			</if>
+			<if test="liveAddr != null" >
+			  AND A.live_addr = #{liveAddr,jdbcType=VARCHAR}
+			</if>
+			<if test="livest != null" >
+			  AND A.livest = #{livest,jdbcType=VARCHAR}
+			</if>
+			<if test="mchtCity != null" >
+			  AND A.mcht_city = #{mchtCity,jdbcType=VARCHAR}
+			</if>
+			<if test="mchtAddr != null" >
+			  AND A.mcht_addr = #{mchtAddr,jdbcType=VARCHAR}
+			</if>
+			<if test="marriag != null" >
+			  AND A.marriag = #{marriag,jdbcType=CHAR}
+			</if>
+			<if test="spouseNm != null" >
+			  AND A.spouse_nm = #{spouseNm,jdbcType=VARCHAR}
+			</if>
+			<if test="spouseIdtp != null" >
+			  AND A.spouse_idtp = #{spouseIdtp,jdbcType=VARCHAR}
+			</if>
+			<if test="spouseIdno != null" >
+			  AND A.spouse_idno = #{spouseIdno,jdbcType=VARCHAR}
+			</if>
+			<if test="empPhone != null" >
+			  AND A.emp_phone = #{empPhone,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null" >
+			  AND A.status = #{status,jdbcType=CHAR}
+			</if>
+			<if test="status2dfire != null" >
+			  AND A.status_2dfire = #{status2dfire,jdbcType=CHAR}
+			</if>
+			<if test="contractNo != null" >
+			  AND A.contract_no = #{contractNo,jdbcType=VARCHAR}
+			</if>
+			<if test="grantNo != null" >
+			  AND A.grant_no = #{grantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="grantTime != null" >
+			  AND A.grant_time = #{grantTime,jdbcType=BIGINT}
+			</if>
+			<if test="payRate != null" >
+			  AND A.pay_rate = #{payRate,jdbcType=DECIMAL}
+			</if>
+		    <if test="contSignFlag != null">
+		      AND A.contSignFlag = #{contSignFlag,jdbcType=VARCHAR}
+		    </if>
+		    <if test="contSignTime != null">
+		      AND A.contSignTime = #{contSignTime,jdbcType=BIGINT}
+		    </if>
+			<if test="failCode != null" >
+			  AND A.fail_code = #{failCode,jdbcType=VARCHAR}
+			</if>
+			<if test="createUid != null" >
+			  AND A.create_uid = #{createUid,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null" >
+			  AND A.create_time = #{createTime,jdbcType=BIGINT}
+			</if>
+			<if test="lastModifyUid != null" >
+			  AND A.last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}
+			</if>
+			<if test="lastModifyTime != null" >
+			  AND A.last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+			</if>
+			<if test="dayLimit != null" >
+				<![CDATA[  AND DATE_SUB(CURDATE(), INTERVAL ${dayLimit} DAY) <= date(from_unixtime(substring(A.create_time,1,10),'%Y-%m-%d')) ]]>
+				and A.status_2dfire in ('1','2') and A.status = '3'
+			</if>
+			<if test="effectiveStatus != null" >
+				and A.status in ('3','5')
+			</if>
+		order by A.create_time desc
+	</select>
+
+	<select id="getCreditDetail" parameterType="com.allinpal.twodfireservice.creditService.domain.Credit" resultMap="CreditResultMap">
+		select A.* ,B.appl_term as use_term, B.app_amt as use_amt, B.manager_fee, B.status as status_use, B.record_no as use_record_no
+			from 2dfire.t_loan_credit_req A
+			left join 2dfire.t_loan_use_req B on B.credit_record_no = A.record_no
+			where 1=1
+		    <if test="recordNo != null" >
+		        AND A.record_no = #{recordNo,jdbcType=VARCHAR}
+		    </if>
+			<if test="orgChl != null" >
+			   AND A.org_chl = #{orgChl,jdbcType=VARCHAR}
+			</if>
+			<if test="acctId != null" >
+			   AND A.acct_id = #{acctId,jdbcType=VARCHAR}
+			</if>
+			<if test="userId != null" >
+			   AND A.user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="orgCode != null" >
+			  AND A.org_code = #{orgCode,jdbcType=VARCHAR}
+			</if>
+			<if test="prodCode != null" >
+			  AND A.prod_code = #{prodCode,jdbcType=VARCHAR}
+			</if>
+			<if test="merchantNo != null" >
+			  AND A.merchant_no = #{merchantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="licenseNo != null" >
+			  AND A.license_no = #{licenseNo,jdbcType=VARCHAR}
+			</if>
+	        <if test="registerDate != null">
+	          AND A.register_date = #{registerDate,jdbcType=VARCHAR}
+	        </if>
+			<if test="lmtSerno != null" >
+			  AND A.lmt_serno = #{lmtSerno,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null" >
+			  AND A.mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="custName != null" >
+			  AND A.cust_name = #{custName,jdbcType=VARCHAR}
+			</if>
+			<if test="certType != null" >
+			  AND A.cert_type = #{certType,jdbcType=VARCHAR}
+			</if>
+			<if test="certNo != null" >
+			  AND A.cert_no = #{certNo,jdbcType=VARCHAR}
+			</if>
+			<if test="bankName != null" >
+			  AND A.bank_name = #{bankName,jdbcType=VARCHAR}
+			</if>
+			<if test="bankCode != null" >
+			  AND A.bank_code = #{bankCode,jdbcType=VARCHAR}
+			</if>
+			<if test="bankAcctNo != null" >
+			  AND A.bank_acct_no = #{bankAcctNo,jdbcType=VARCHAR}
+			</if>
+			<if test="applAmt != null" >
+			  AND A.appl_amt = #{applAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="sixMonthAmt != null" >
+			  AND A.six_month_amt = #{sixMonthAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="twelveMonthAmt != null" >
+			  AND A.twelve_month_amt = #{twelveMonthAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="lmtStartDate != null" >
+			  AND A.lmt_start_date = #{lmtStartDate,jdbcType=VARCHAR}
+			</if>
+			<if test="lmtEndDate != null" >
+			  AND A.lmt_end_date = #{lmtEndDate,jdbcType=VARCHAR}
+			</if>
+			<if test="liveCity != null" >
+			  AND A.live_city = #{liveCity,jdbcType=VARCHAR}
+			</if>
+			<if test="liveAddr != null" >
+			  AND A.live_addr = #{liveAddr,jdbcType=VARCHAR}
+			</if>
+			<if test="livest != null" >
+			  AND A.livest = #{livest,jdbcType=VARCHAR}
+			</if>
+			<if test="mchtCity != null" >
+			  AND A.mcht_city = #{mchtCity,jdbcType=VARCHAR}
+			</if>
+			<if test="mchtAddr != null" >
+			  AND A.mcht_addr = #{mchtAddr,jdbcType=VARCHAR}
+			</if>
+			<if test="marriag != null" >
+			  AND A.marriag = #{marriag,jdbcType=CHAR}
+			</if>
+			<if test="spouseNm != null" >
+			  AND A.spouse_nm = #{spouseNm,jdbcType=VARCHAR}
+			</if>
+			<if test="spouseIdtp != null" >
+			  AND A.spouse_idtp = #{spouseIdtp,jdbcType=VARCHAR}
+			</if>
+			<if test="spouseIdno != null" >
+			  AND A.spouse_idno = #{spouseIdno,jdbcType=VARCHAR}
+			</if>
+			<if test="empPhone != null" >
+			  AND A.emp_phone = #{empPhone,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null" >
+			  AND A.status = #{status,jdbcType=CHAR}
+			</if>
+			<if test="status2dfire != null" >
+			  AND A.status_2dfire = #{status2dfire,jdbcType=CHAR}
+			</if>
+			<if test="contractNo != null" >
+			  AND A.contract_no = #{contractNo,jdbcType=VARCHAR}
+			</if>
+			<if test="grantNo != null" >
+			  AND A.grant_no = #{grantNo,jdbcType=VARCHAR}
+			</if>
+			<if test="grantTime != null" >
+			  AND A.grant_time = #{grantTime,jdbcType=BIGINT}
+			</if>
+			<if test="payRate != null" >
+			  AND A.pay_rate = #{payRate,jdbcType=DECIMAL}
+			</if>
+		    <if test="contSignFlag != null">
+		      AND A.contSignFlag = #{contSignFlag,jdbcType=VARCHAR}
+		    </if>
+		    <if test="contSignTime != null">
+		      AND A.contSignTime = #{contSignTime,jdbcType=BIGINT}
+		    </if>
+			<if test="failCode != null" >
+			  AND A.fail_code = #{failCode,jdbcType=VARCHAR}
+			</if>
+			<if test="createUid != null" >
+			  AND A.create_uid = #{createUid,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null" >
+			  AND A.create_time = #{createTime,jdbcType=BIGINT}
+			</if>
+			<if test="lastModifyUid != null" >
+			  AND A.last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}
+			</if>
+			<if test="lastModifyTime != null" >
+			  AND A.last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+			</if>
+			<if test="dayLimit != null" >
+				<![CDATA[  AND DATE_SUB(CURDATE(), INTERVAL ${dayLimit} DAY) <= date(from_unixtime(substring(A.create_time,1,10),'%Y-%m-%d')) ]]>
+			</if>
+		order by A.create_time desc
+	</select>
+
+	<update id="updateLoanCreditReq" parameterType="com.allinpal.twodfireservice.creditService.domain.Credit">
+		update 2dfire.t_loan_credit_req
+    	<set >
+	      <if test="sixMonthAmt != null" >
+	        six_month_amt = #{sixMonthAmt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="twelveMonthAmt != null" >
+	        twelve_month_amt = #{twelveMonthAmt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="lmtStartDate != null" >
+	        lmt_start_date = #{lmtStartDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lmtEndDate != null" >
+	        lmt_end_date = #{lmtEndDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status,jdbcType=CHAR},
+	      </if>
+	      <if test="status2dfire != null" >
+	        status_2dfire = #{status2dfire,jdbcType=CHAR},
+	      </if>
+	      <if test="contractNo != null" >
+	        contract_no = #{contractNo,jdbcType=VARCHAR},
+	      </if>
+		  <if test="contSignFlag != null">
+		    cont_sign_flag = #{contSignFlag,jdbcType=VARCHAR},
+		  </if>
+		  <if test="contSignTime != null">
+		    cont_sign_time = #{contSignTime,jdbcType=BIGINT},
+		  </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+	      </if>
+	    </set>
+		where record_no = #{recordNo}
+	</update>
+
+	<select id="getCreditListNotSign" parameterType="com.allinpal.twodfireservice.creditService.domain.Credit" resultMap="CreditResultMap">
+		select * from  2dfire.t_loan_credit_req where cont_sign_flag != #{contSignFlag}
+			<![CDATA[ AND CURDATE()-7 > from_unixtime(substring(create_time,1,10),'%Y%m%d') ]]>
+		union all
+		select * from  2dfire.t_loan_credit_req where cont_sign_flag is null
+			<![CDATA[ AND CURDATE()-7 > from_unixtime(substring(create_time,1,10),'%Y%m%d') ]]>
+			
+	</select>
+</mapper>

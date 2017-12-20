@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>【征信查询上报授权书】</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<script src="vendor/jquery-2.1.3.min.js"></script>
+		
+		<script type="text/javascript" src="js/wx.js"></script>
+		
+		<style type="text/css" media="screen">
+			body {
+				background: #f0f0f0;
+				font-size: 12px;
+				line-height: 22px;
+				padding: 20px;
+			}
+			
+			h1 {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				font-size: 12px;
+			}
+			
+			table {
+				border: 1px solid #ccc;
+				border-collapse: collapse;
+			}
+			
+			table td {
+				border: 1px solid #ccc;
+				padding: 5px 10px;
+			}
+			
+			ul,
+			li {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">【征信查询上报授权书】</h1>
+		</header>
+		<h3 align="center">
+			<strong>征信查询上报授权书</strong>
+		</h3>
+		<p>本人授权及同意国民信托有限公司（以下简称&ldquo;国民信托&rdquo;），在本人发生下列任一情形时，可以通过中国人民银行个人信息基础数据库或深圳前海征信中心或腾讯征信/及其他征信系统或/及与征信相关的第三方数据库的自有数据库或与其合作的第三方数据库（以下统称&ldquo;征信数据库&rdquo;）采集、查询、核实、保存本人的个人信息（个人信息包括与本人有关的基本信息、信贷信息、收入信息、税务信息、财产信息、不良信用信息或与本人征信直接或间接相关的其他各项信息），并通过及同意前述征信数据库及国民信托股份有限公司对该等个人信用信息进行各项识别、验证、筛查、保存、整理、评价及加工等信息处理，并将前述经过信息处理后的本人个人信息使用于如下任一情形所涉及的事项： </p>
+		<p>涉及本人通过国民信托而进行的个人借款申请（以下简称&ldquo;借款申请&rdquo;）； </p>
+		<p>涉及本人的个人担保事宜； </p>
+		<p>对本人名下已发生的借款或个人担保进行风险管理及后续信息跟踪管理； </p>
+		<p>涉及本人前述借款申请所需的个人信用评估等事项； </p>
+		<p>涉及本人作为法定代表人或股东或出资人的法人或其他组织的借款申请，或该法人或其他组织作为担保人，需要查询本人作为法定代表人或股东或出资人的有关信用状况； </p>
+		<p>涉及本人前述借款申请或个人担保有关的其他任何相关事项； </p>
+		<p>涉及本人与国民信托发生的其他任何业务。 </p>
+		<p>同时同意及授权国民信托可以将本人的个人信息（含本人的不良信用信息）提供、报送给前述征信数据库。本人亦同意及授权前述征信数据库，保存、整理征信数据库通过合法途径采集的本人全部个人信息，并提供给国民信托用于前述各项情形。 <br /> 就前述同意及授权事项，本人确认：本人明知，前述授权事宜可能会对本人产生不利后果，但本人自愿承担该等不利后果，并仍不可撤销地同意前述授权，且不会提出任何异议。签署本授权书即视为本人对前述事项的充分授权，国民信托无需另行通过短信或书面信件等方式通知本人，本人愿承担因前述授权事项所存在及可能存在的风险及责任。 </p>
+		<p>特此授权。 </p>
+		<p>授权人（签字）：<u><span th:text="${custName}"/></u> <br />
+			<span th:text="${signDate}"/>
+		</p>
+	</body>
+</html>

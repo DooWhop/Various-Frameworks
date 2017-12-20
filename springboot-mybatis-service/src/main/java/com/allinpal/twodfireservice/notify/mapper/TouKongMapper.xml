@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.allinpal.twodfireservice.notify.mapper.TouKongMapper" >
+	 <resultMap id="TouKongMap" type="com.allinpal.twodfireservice.notify.domain.TouKongInfo">
+	    <result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="org_chl" property="orgChl" jdbcType="VARCHAR" />
+	    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+	    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+	    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+	    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+	    <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR" />
+	    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+	    <result column="lmt_serno" property="lmtSerno" jdbcType="VARCHAR" />
+	    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+	    <result column="cert_type" property="certType" jdbcType="VARCHAR" />
+	    <result column="cert_no" property="certNo" jdbcType="VARCHAR" />
+	    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+	    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+	    <result column="bank_acct_no" property="bankAcctNo" jdbcType="VARCHAR" />
+	    <result column="appl_amt" property="applAmt" jdbcType="DECIMAL" />
+	    <result column="six_month_amt" property="sixMonthAmt" jdbcType="DECIMAL" />
+	    <result column="twelve_month_amt" property="twelveMonthAmt" jdbcType="DECIMAL" />
+	    <result column="lmt_start_date" property="lmtStartDate" jdbcType="VARCHAR" />
+	    <result column="lmt_end_date" property="lmtEndDate" jdbcType="VARCHAR" />
+	    <result column="live_city" property="liveCity" jdbcType="VARCHAR" />
+	    <result column="live_addr" property="liveAddr" jdbcType="VARCHAR" />
+	    <result column="livest" property="livest" jdbcType="VARCHAR" />
+	    <result column="mcht_city" property="mchtCity" jdbcType="VARCHAR" />
+	    <result column="mcht_addr" property="mchtAddr" jdbcType="VARCHAR" />
+	    <result column="marriag" property="marriag" jdbcType="CHAR" />
+	    <result column="spouse_nm" property="spouseNm" jdbcType="VARCHAR" />
+	    <result column="spouse_idtp" property="spouseIdtp" jdbcType="VARCHAR" />
+	    <result column="spouse_idno" property="spouseIdno" jdbcType="VARCHAR" />
+	    <result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="CHAR" />
+	    <result column="status_2dfire" property="status2dfire" jdbcType="CHAR" />
+	    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+	    <result column="grant_no" property="grantNo" jdbcType="VARCHAR" />
+	    <result column="grant_time" property="grantTime" jdbcType="BIGINT" />
+	    <result column="pay_rate" property="payRate" jdbcType="DECIMAL" />
+	    <result column="fail_code" property="failCode" jdbcType="VARCHAR" />
+	    <result column="describle" property="describle" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+	    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+	    <result column="app_amt" property="appAmt" jdbcType="DECIMAL" />
+	    <result column="user_create_time" property="openDate" jdbcType="BIGINT" />
+	    <result column="appl_term" property="applTerm" jdbcType="VARCHAR" />
+	    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+	    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+	    <result column="client_no" property="clientNo" jdbcType="VARCHAR" />
+	    <result column="loan_date" property="loanDate" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="prodAcctMap" type="com.allinpal.twodfireservice.notify.domain.ProdAcctInfo">
+	    <result column="acct_id" jdbcType="VARCHAR" property="acctId" />
+	    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+	    <result column="user_card_id" jdbcType="VARCHAR" property="userCardId" />
+	    <result column="prod_code" jdbcType="VARCHAR" property="prodCode" />
+	    <result column="legal_name" jdbcType="VARCHAR" property="legalName" />
+	    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+	    <result column="cert_no" jdbcType="VARCHAR" property="certNo" />
+	    <result column="merchant_no" jdbcType="VARCHAR" property="merchantNo" />
+	    <result column="busi_cert_no" jdbcType="VARCHAR" property="busiCertNo" />
+	    <result column="status" jdbcType="VARCHAR" property="status" />
+	    <result column="expire_time" jdbcType="BIGINT" property="expireTime" />
+	    <result column="client_no" jdbcType="VARCHAR" property="clientNo" />
+	    <result column="create_uid" jdbcType="VARCHAR" property="createUid" />
+	    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+	    <result column="last_modify_uid" jdbcType="VARCHAR" property="lastModifyUid" />
+	    <result column="last_modify_time" jdbcType="BIGINT" property="lastModifyTime" />
+	 </resultMap>
+	 
+	 <resultMap id="loanRateMap" type="com.allinpal.twodfireservice.notify.domain.LoanRate" >
+	    <result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+	    <result column="appl_term" property="applTerm" jdbcType="VARCHAR" />
+	    <result column="loan_rate" property="loanRate" jdbcType="DECIMAL" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="expiry_time" property="expiryTime" jdbcType="BIGINT" />
+	    <result column="remark" property="remark" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+	  </resultMap>
+	  
+	<select id="queryCreditInfo" parameterType="com.allinpal.twodfireservice.notify.domain.Notify" resultMap="TouKongMap" >
+		select a.record_no as use_record_no ,a.app_amt, a.appl_term, a.bill_no, a.loan_date, b.*,c.create_time as user_create_time,d.client_no
+			from 2dfire.t_loan_use_req a 
+			left join 2dfire.t_loan_credit_req b 
+			on  a.credit_record_no = b.record_no 
+			left join 2dfire.t_user c
+			on b.user_id = c.user_id
+			left join 2dfire.t_prod_acct d
+			on c.user_id = d.user_id
+		where a.record_no = #{app_seq}
+	</select>
+	
+	<select id="queryProdAcctInfo" parameterType="com.allinpal.twodfireservice.notify.domain.TouKongInfo" resultMap="prodAcctMap" >
+		select * from 2dfire.t_prod_acct
+		where acct_id = #{acctId}
+	</select>
+	
+	<update id="updateProdAcctInfo" parameterType="com.allinpal.twodfireservice.notify.domain.ProdAcctInfo" >
+		update 2dfire.t_prod_acct set client_no = #{clientNo,jdbcType=VARCHAR}, 
+		last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}, last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+		where acct_id = #{acctId}
+	</update>
+	
+	<select id="queryLoanRate" parameterType="com.allinpal.twodfireservice.notify.domain.LoanRate" resultMap="loanRateMap" >
+		select * from 2dfire.t_loan_rate
+		where prod_code = #{prodCode}
+		and appl_term = #{applTerm}
+		and status = #{status}
+	</select>
+	
+	<update id="updateLoanUseReq" parameterType="com.allinpal.twodfireservice.notify.domain.DeductLoanUseReq">
+		update 2dfire.t_loan_use_req  set 
+		<if test="billNo != null">
+			bill_no = #{billNo,jdbcType=VARCHAR},
+		</if>
+		<if test="newStatus != null">
+			status = #{newStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="loanDate != null">
+			loan_date = #{loanDate,jdbcType=VARCHAR},
+		</if>
+		last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}, 
+		last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+		where record_no = #{recordNo}
+	</update>
+	
+	<delete id="deleteRepayPlan" parameterType="com.allinpal.twodfireservice.notify.domain.TouKongRepayPlan">
+		delete from 2dfire.t_loan_repay_plan where use_record_no = #{useRecordNo} and prod_code = #{prodCode}
+	</delete>
+	
+	<select id="queryRepayPlanCount" parameterType="com.allinpal.twodfireservice.notify.domain.TouKongRepayPlan" resultType="int">
+		select count(1) from 2dfire.t_loan_repay_plan  where use_record_no = #{useRecordNo} and prod_code = #{prodCode}
+	</select>
+	
+	<insert id="insertToukongMessage" parameterType="com.allinpal.twodfireservice.notify.domain.TouKongMessage" >
+	    insert into 2dfire.t_toukong_message
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        record_no,
+	      </if>
+	      <if test="origRecordNo != null" >
+	        orig_record_no,
+	      </if>
+	      <if test="transCode != null" >
+	        trans_code,
+	      </if>
+	      <if test="transSn != null" >
+	        trans_sn,
+	      </if>
+	      <if test="retCode != null" >
+	        ret_code,
+	      </if>
+	      <if test="retMsg != null" >
+	        ret_msg,
+	      </if>
+	      <if test="reqContent != null" >
+	        req_content,
+	      </if>
+	      <if test="respContent != null" >
+	        resp_content,
+	      </if>
+	      <if test="createUid != null" >
+	        create_uid,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="recordNo != null" >
+	        #{recordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="origRecordNo != null" >
+	        #{origRecordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="transCode != null" >
+	        #{transCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="transSn != null" >
+	        #{transSn,jdbcType=VARCHAR},
+	      </if>
+	      <if test="retCode != null" >
+	        #{retCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="retMsg != null" >
+	        #{retMsg,jdbcType=VARCHAR},
+	      </if>
+	      <if test="reqContent != null" >
+	        #{reqContent,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="respContent != null" >
+	        #{respContent,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="createUid != null" >
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+	  </insert>
+	
+	  <insert id="insertRepayPlan" parameterType="com.allinpal.twodfireservice.notify.domain.TouKongRepayPlan" >
+	    insert into 2dfire.t_loan_repay_plan
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="recordNo != null">
+	        record_no,
+	      </if>
+	      <if test="prodCode != null">
+	        prod_code,
+	      </if>
+	      <if test="useRecordNo != null">
+	        use_record_no,
+	      </if>
+	      <if test="contractNo != null">
+	        contract_no,
+	      </if>
+	      <if test="startDate != null">
+	        start_date,
+	      </if>
+	      <if test="tpnum != null">
+	        tpnum,
+	      </if>
+	      <if test="payDate != null">
+	        pay_date,
+	      </if>
+	      <if test="payRate != null">
+	        pay_rate,
+	      </if>
+	      <if test="payTotamt != null">
+	        pay_totamt,
+	      </if>
+	      <if test="payPrinamt != null">
+	        pay_prinamt,
+	      </if>
+	      <if test="payInteamt != null">
+	        pay_inteamt,
+	      </if>
+	      <if test="startBalamt != null">
+	        start_balamt,
+	      </if>
+	      <if test="endBalamt != null">
+	        end_balamt,
+	      </if>
+	      <if test="chargeAmt != null">
+	        charge_amt,
+	      </if>
+	      <if test="remark != null">
+	        remark,
+	      </if>
+	      <if test="createUid != null">
+	        create_uid,
+	      </if>
+	      <if test="createTime != null">
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null">
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null">
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="recordNo != null">
+	        #{recordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="prodCode != null">
+	        #{prodCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="useRecordNo != null">
+	        #{useRecordNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="contractNo != null">
+	        #{contractNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="startDate != null">
+	        #{startDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="tpnum != null">
+	        #{tpnum,jdbcType=INTEGER},
+	      </if>
+	      <if test="payDate != null">
+	        #{payDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="payRate != null">
+	        #{payRate,jdbcType=DECIMAL},
+	      </if>
+	      <if test="payTotamt != null">
+	        #{payTotamt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="payPrinamt != null">
+	        #{payPrinamt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="payInteamt != null">
+	        #{payInteamt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="startBalamt != null">
+	        #{startBalamt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="endBalamt != null">
+	        #{endBalamt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="chargeAmt != null">
+	        #{chargeAmt,jdbcType=DECIMAL},
+	      </if>
+	      <if test="remark != null">
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createUid != null">
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null">
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null">
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null">
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+  	</insert>
+</mapper>

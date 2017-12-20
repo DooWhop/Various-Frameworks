@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>贷款记录</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+	</head>
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">贷款记录</h1>
+		</header>
+		<div class="wx-content">		
+			<form id="myForm" name='myForm' action="" method="post">
+				<input type="hidden" name="creditList" id="creditList" th:value='${creditList}' />
+				<input type="hidden" name="creditListStr" id="creditListStr" th:value='${creditListStr}' />
+				<input type="hidden" name="merchantNo" id="merchantNo" th:value='${merchantNo}' />
+				<input type="hidden" name="prodCode" id="prodCode" th:value='${prodCode}' />
+				<input type="hidden" name="mobile" id="mobile" th:value='${mobile}' />
+				<input type="hidden" name="recordNo" id="recordNo" th:value='${recordNo}' />
+			</form>	
+			
+			<span th:if="${'0' == totalCount}"> 
+				<div class="wx-content">
+				<!--没有授信样式-->
+					<div class="card-empty">
+						<span class="icon-img-empty"></span>
+						<div class="cl3 mt20">您还没有任何授信申请</div>
+						<a class="wx-btn wx-btnh" onclick="initRedirect()">立即申请</a>
+					</div>
+				</div>
+			</span>
+			
+			<ul class="wx-clicklist wx-zylist bgf">
+				<span th:each="credit,sta : ${creditList}">
+					<from name='creditForm'  action="" method="post">
+						<input type="hidden"  th:value="${credit.recordNo}" />
+						<li class="wkbox wkbox-top" onclick="queryCreditDetail(this)">
+							<div class="iconfont icon-jiesuan"></div>
+							<div class="autoW pl12">
+								<div th:switch="${credit.status}">
+									<span th:case='3'>
+										<div class="f12"><span th:text="${credit.describle}"/></div>
+										<div class="cl3 mt10"><span class="f18"><span th:text="${credit.applAmt}"/></span> 元</div>
+										<i class="clhu">待输入提取码</i>
+										<div class="btn-box">
+											<a onclick="queryCreditDetail(this)" class="wx-btn">提取报告</a>
+										</div>
+									</span>
+									<span th:case='5'>
+										<div class="f12"><span th:text="${credit.describle}"/></div>
+										<div class="cl3 mt10"><span class="f18"><span th:text="${credit.applAmt}"/></span> 元</div>
+										<i class="cll">待用款</i>
+										<div class="btn-box">
+											<a onclick="queryCreditDetail(this)" class="wx-btn">用款申请</a>
+										</div>
+									</span>
+									<span th:case='*'>
+										<div class="f12"><span th:text="${credit.describle}"/></div>
+										<div class="cl3 mt10"><span class="f18"><span th:text="${credit.applAmt}"/></span> 元</div>
+										<i class="clh">
+											<span th:if="${'1' == credit.status}">申请未完成</span>
+											<span th:if="${'2' == credit.status}">申请失效</span>
+											<span th:if="${'4' == credit.status}">审批失败</span>
+											<span th:if="${'6' == credit.status}">额度生效</span>
+											<span th:if="${'7' == credit.status}">额度失效</span>
+											<span th:if="${'8' == credit.status}">审批作废</span>
+											<span th:if="${'9' == credit.status}">额度暂停</span>
+											<span th:if="${'13' == credit.status}">贷前拒绝</span>
+										</i>
+									</span>
+								</div>
+							</div>
+						</li>
+					</from>
+				</span>
+			</ul>
+		</div>
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript">
+			function initRedirect(){
+	      		$("#myForm").attr("action", "initRedirect");
+	      		$("#myForm").submit();
+			}
+			
+			function queryCreditDetail(obj){
+				var a = obj;
+				var recordNo = $(obj).prev().val();
+				$("#recordNo").val(recordNo);
+	      		$("#myForm").attr("action", "queryCreditDetail");
+	      		$("#myForm").submit();	
+			}
+		</script>
+	</body>
+</html>

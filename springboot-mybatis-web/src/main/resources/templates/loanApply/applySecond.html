@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>贷款申请</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link href="vendor/mui/css/mui.listpicker.css" rel="stylesheet" />
+		<link href="vendor/mui/css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">贷款申请</h1>
+		</header>
+		<div class="fixBottom bgf fh1 pb20">
+			<div class="wx-btn wx-btnh" id="div1" onclick="submitForm()">提交</div>
+			<div class="wx-btn wx-btnh wx-disabled" id="div2" onclick="submitAgain()" style="display: none;">提交</div>
+		</div>
+		<div class="wx-content">
+			<div class="wx-step-line">
+				<!-- steps 步骤 current 当前步骤 -->
+				<ul data-steps="基本信息,贷款信息,申请提交" data-current="2"></ul>
+			</div>
+			<form id="myForm" name='myForm' action="" method="post">
+				<input type="hidden" name="creditReqStr" id="creditReqStr" th:value='${creditReqStr}' />
+				<input type="hidden" name="bankName" id="bankName" th:value='${creditReq.bankName}' />
+				<input type="hidden" name="bankCode" id="bankCode" th:value='${creditReq.bankCode}' />
+				<input type="hidden" name="bankAcctNo" id="bankAcctNo" th:value='${creditReq.bankAcctNo}' />
+				<ul class="wx-formlist mt20">
+					<li class="wkbox">
+						<div class="tl cl9">申请金额</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="applAmt" name="applAmt" type="tel" placeholder="" maxlength="7" value="" />
+						</div>
+						<div class="tr ml10">元</div>
+					</li>
+					<li class="wkbox" >
+						<div class="tl cl9">贷款银行卡</div>
+						<div class="pl10 autoW tr cl6">
+							<span th:text="${creditReq.bankName}"/> 尾号<span th:text="${acctNoStr}"/>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">客户经理手机号</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="empPhone" name="empPhone" value="" type="tel" placeholder="" maxlength="11" />
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<div class="wx-tips-noAlert">
+			<div style="width: 80px; height: 80px; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%);">
+				<img style="width: 100%; opacity: .8;" src="images/loading.gif" />
+			</div>
+		</div>
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+	   			$('.wx-tips-noAlert').hide();
+				$("#div2").hide();
+	   		};	
+			function submitAgain(){
+				alert("您的申请已提交，请耐心等待！");
+				return false;
+			}	
+   			
+			var phoneRegex = /^\-?[0-9]{11}$/;
+			function submitForm() {
+				var money = $('#applAmt').val();
+				if ($('#applAmt').val() == '') {
+					alert('请输入申请金额');
+					return false;
+				}
+				if(100 > parseInt(money)){
+					alert('申请额度最低为100元');
+					return false;
+				}
+				if(parseInt(money) > 1000000){
+					alert('申请额度最高为100万');
+					return false;
+				}
+				var reg = /^\+?[1-9]\d*$/;
+				var isNum = /^[1-9][0-9]*[0]{2}([.][0]{1,2})?$/;
+				if(!isNum.test(money)){
+					alert('请输入申请的金额为100倍数');
+					return false;
+				}
+				if(!phoneRegex.test($('#empPhone').val())) {
+					alert('请输入正确的客户经理手机号');
+					return false;
+				} 
+				$("#div1").hide();
+				$("#div2").show();
+				$('.wx-tips-noAlert').show();
+ 				$.ajax({
+					url : "checkEmpPhone",
+					type : "post",
+					async : true,
+					traditional:true,
+					data : {
+						empPhone :  $('#empPhone').val()
+					},
+					dataType : "json",
+					beforeSend : function(XMLHttpRequest, object) {
+					},
+					success : function(data, textStatus) {
+						if (data.code == "000000" || data.code == "000001" ) {
+				      		$("#myForm").attr("action", "submitApply");
+				      		$("#myForm").submit();
+			        	} else{
+				   			$('.wx-tips-noAlert').hide(); 
+							$("#div1").show();
+							$("#div2").hide();
+			        		alert("客户经理信息不正确");
+							return false;
+			        	}
+					},
+					error : function(XMLHttpRequest, textStatus,errorThrown) {
+			   			$('.wx-tips-noAlert').hide(); 
+						$("#div1").show();
+						$("#div2").hide();
+						alert("系统异常");
+						return false;
+					}, 
+					complete : function(XMLHttpRequest, textStatus) {
+					}
+				}); 
+				
+			}
+		</script>
+	</body>
+</html>

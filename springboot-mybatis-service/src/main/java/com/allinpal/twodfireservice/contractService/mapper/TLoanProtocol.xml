@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinpal.twodfireservice.contractService.mapper.TLoanProtocolMapper">
+    <select id="selectProtocolByRecordNo" resultType="com.allinpal.twodfireservice.contractService.domain.TLoanProtocol">
+        select 
+			record_no as recordNo,
+			credit_record_no as creditRecordNo,
+			acct_id as acctId,
+			prod_code as prodCode,
+			protocol_type as protocolType,
+			protocol_no as protocolNo,
+			status,
+			version,
+			sign_date as signDate,
+			original_zipfile_id as originalZipfileId,
+			original_pdffile_id as originalPdffileId,
+			signed_pdffile_id as signedPdffileId,
+			signed_zipfile_id as signedZipfileId,
+			create_uid as createUid,
+			create_time as createTime,
+			last_modify_uid as lastModifyUid,
+			last_modify_time as lastModifyTime,
+			batch_no as batchNo,
+			appl_term as applTerm,
+			use_record_no as useRecordNo
+	 	from 2dfire.t_loan_protocol where record_no = #{record_no}
+    </select>
+    
+    <select id="getTLoanProtocols" resultType="com.allinpal.twodfireservice.contractService.domain.TLoanProtocol">
+        select 
+			record_no as recordNo,
+			credit_record_no as creditRecordNo,
+			acct_id as acctId,
+			prod_code as prodCode,
+			protocol_type as protocolType,
+			protocol_no as protocolNo,
+			status,
+			version,
+			sign_date as signDate,
+			original_zipfile_id as originalZipfileId,
+			original_pdffile_id as originalPdffileId,
+			signed_pdffile_id as signedPdffileId,
+			signed_zipfile_id as signedZipfileId,
+			create_uid as createUid,
+			create_time as createTime,
+			last_modify_uid as lastModifyUid,
+			last_modify_time as lastModifyTime,
+			batch_no as batchNo,
+			appl_term as applTerm,
+			use_record_no as useRecordNo
+		 from 2dfire.t_loan_protocol 
+        where 1=1
+        <if test="recordNo != null" >
+	        and record_no = #{recordNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="creditRecordNo != null" >
+	        and credit_record_no = #{creditRecordNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="acctId != null" >
+	        and acct_id = #{acctId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="prodCode != null" >
+	        and prod_code = #{prodCode,jdbcType=VARCHAR}
+	      </if>
+	      <if test="protocolType != null" >
+	        and protocol_type = #{protocolType,jdbcType=VARCHAR}
+	      </if>
+	      <if test="protocolNo != null" >
+	        and protocol_no = #{protocolNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="status != null" >
+	        and status = #{status,jdbcType=VARCHAR}
+	      </if>
+	      <if test="version != null" >
+	       	and version = #{version,jdbcType=VARCHAR}
+	      </if>
+	      <if test="signDate != null" >
+	        and sign_date = #{signDate,jdbcType=VARCHAR}
+	      </if>
+	      <if test="originalZipfileId != null" >
+	        and original_zipfile_id = #{originalZipfileId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="originalPdffileId != null" >
+	        and original_pdffile_id = #{originalPdffileId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="signedPdffileId != null" >
+	        and signed_pdffile_id = #{signedPdffileId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="signedZipfileId != null" >
+	        and signed_zipfile_id = #{signedZipfileId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="createUid != null" >
+	        and create_uid = #{createUid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="createTime != null" >
+	        and create_time = #{createTime,jdbcType=BIGINT}
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        and last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        and last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	      <if test="batchNo != null" >
+	        and batch_no = #{batchNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="applTerm != null" >
+	        and appl_term = #{applTerm,jdbcType=VARCHAR}
+	      </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.allinpal.twodfireservice.contractService.domain.TLoanProtocol">
+    insert into 2dfire.t_loan_protocol
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordNo != null" >
+        record_no,
+      </if>
+      <if test="creditRecordNo != null" >
+        credit_record_no,
+      </if>
+      <if test="acctId != null" >
+        acct_id,
+      </if>
+      <if test="prodCode != null" >
+        prod_code,
+      </if>
+      <if test="protocolType != null" >
+        protocol_type,
+      </if>
+      <if test="protocolNo != null" >
+        protocol_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="signDate != null" >
+        sign_date,
+      </if>
+      <if test="originalZipfileId != null" >
+        original_zipfile_id,
+      </if>
+      <if test="originalPdffileId != null" >
+        original_pdffile_id,
+      </if>
+      <if test="signedPdffileId != null" >
+        signed_pdffile_id,
+      </if>
+      <if test="signedZipfileId != null" >
+        signed_zipfile_id,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+      <if test="applTerm != null" >
+        appl_term,
+      </if>
+      <if test="useRecordNo != null" >
+        use_record_no,
+      </if>
+      <if test="createUid != null" >
+        create_uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyUid != null" >
+        last_modify_uid,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordNo != null" >
+        #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditRecordNo != null" >
+        #{creditRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null" >
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodCode != null" >
+        #{prodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolType != null" >
+        #{protocolType,jdbcType=VARCHAR},
+      </if>
+      <if test="protocolNo != null" >
+        #{protocolNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null" >
+        #{signDate,jdbcType=VARCHAR},
+      </if>
+      <if test="originalZipfileId != null" >
+        #{originalZipfileId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalPdffileId != null" >
+        #{originalPdffileId,jdbcType=VARCHAR},
+      </if>
+      <if test="signedPdffileId != null" >
+        #{signedPdffileId,jdbcType=VARCHAR},
+      </if>
+      <if test="signedZipfileId != null" >
+        #{signedZipfileId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applTerm != null" >
+        #{applTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="useRecordNo != null" >
+        #{useRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createUid != null" >
+        #{createUid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyUid != null" >
+        #{lastModifyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateProtocol" parameterType="com.allinpal.twodfireservice.contractService.domain.TLoanProtocol">
+  	update 2dfire.t_loan_protocol
+  	<set >
+	      <if test="prodCode != null" >
+	        prod_code = #{prodCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="protocolType != null" >
+	        protocol_type = #{protocolType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="protocolNo != null" >
+	        protocol_no = #{protocolNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status,jdbcType=VARCHAR},
+	      </if>
+	      <if test="version != null" >
+	       	version = #{version,jdbcType=VARCHAR},
+	      </if>
+	      <if test="signDate != null" >
+	        sign_date = #{signDate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="originalZipfileId != null" >
+	        original_zipfile_id = #{originalZipfileId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="originalPdffileId != null" >
+	        original_pdffile_id = #{originalPdffileId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="signedPdffileId != null" >
+	        signed_pdffile_id = #{signedPdffileId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="signedZipfileId != null" >
+	        signed_zipfile_id = #{signedZipfileId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="batchNo != null" >
+	       batch_no = #{batchNo,jdbcType=VARCHAR},
+	     </if>
+	     <if test="applTerm != null" >
+	       appl_term = #{applTerm,jdbcType=VARCHAR},
+	      </if>
+	      <if test="useRecordNo != null" >
+	       use_record_no = #{useRecordNo,jdbcType=VARCHAR},
+	     </if>
+	      <if test="createUid != null" >
+	        create_uid = #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time = #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid = #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+	      </if>
+  	</set>
+  	where record_no = #{recordNo,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getCreditById" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from 2dfire.t_loan_credit_req where record_no = #{creditRecordNo}
+    </select>
+  
+  <select id="queryPerSign" resultType="map">
+        select
+        	seal_data sealData,
+        	bst_acct_id accountId
+        from t_user_signature where iden_no = #{idenNo} limit 1
+    </select>
+    
+    <insert id="insertPerSign">
+        insert into t_user_signature (bst_acct_id, iden_no, seal_data) values(
+        	#{accountId},#{idenNo},#{sealData}
+        )
+    </insert>
+    <select id="getBankCodeMapping" resultType="map">
+        select
+        	prod_code prodCode,
+        	bank_code bankCode,
+        	bank_name bankName,
+        	payment_model paymentModel,
+        	xt_bank_code xtBankCode
+        from 2dfire.t_bank_code_mapping where bank_code=#{bankCode}
+    </select>
+    
+    <select id="getUserIdenFile" resultType="java.util.Map">
+        select
+        	file_id fileId,
+        	file_name fileName
+        from 2dfire.t_user_iden_file 
+        where user_id=#{userId}
+        and file_type = #{fileType}
+        and iden_face = #{idenFace}
+        and status = #{status}
+        and ocr_state = '10'
+    </select>
+</mapper>

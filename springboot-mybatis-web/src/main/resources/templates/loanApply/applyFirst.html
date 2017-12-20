@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>贷款申请</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link href="vendor/mui/css/mui.listpicker.css" rel="stylesheet" />
+		<link href="vendor/mui/css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">贷款申请</h1>
+		</header>
+		<div class="fixBottom bgf fh1 pb20">
+			<div class="wx-btn wx-btnh" onclick="submitForm()">下一步</div>
+		</div>
+		<div class="wx-content">
+			<div class="wx-step-line">
+				<!-- steps 步骤 current 当前步骤 -->
+				<ul data-steps="基本信息,贷款信息,申请提交" data-current="1"></ul>
+			</div>
+			<form id="myForm" name='myForm' action="" method="post">
+				<input type="hidden" name="creditReqStr" id="creditReqStr" th:value='${creditReqStr}' />
+				<ul class="wx-formlist mt20">
+					<li class="wkbox">
+						<div>姓名</div>
+						<div class="pl10 autoW tr wx-input-group">
+							<input type="text" id="custName" name="custName" th:value="${creditReq.custName}" maxlength="10" readonly="readonly" />
+						</div>
+					</li>
+					<li class="wkbox">
+						<div>身份证号</div>
+						<div class="pl10 autoW tr cl3c wx-input-group">
+							<input type="text" id="certNo" th:value="${creditReq.certNo}" placeholder="" maxlength="18" readonly="readonly" />
+						</div>
+					</li>
+					<li class="wkbox">
+						<div>手机号</div>
+						<div class="pl10 autoW tr cl3c wx-input-group">
+							<input type="hidden" id="mobile" name="mobile" th:value="${creditReq.mobile}" />
+							<input type="text" id="mobilestr" th:value="${mobilestr}" readonly="readonly" />
+						</div>
+					</li>
+					<li class="">
+						<div class="wkbox wx-navigate-right">
+						<div>通讯地所在省市区</div>
+							<div class="pl10 autoW tr cl3c wx-input-group">
+								<input type="text" style="color: #ccc;" readonly="readonly" id='showCityPicker' name='showCityPicker' value="请选择"/>
+							</div>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div>通讯地详细地址</div>
+						<div class="pl10 autoW tr cl3c wx-input-group pl10">
+							<input type="text" id="mchtAddr" name="mchtAddr" placeholder="" maxlength="120" value="" />
+						</div>
+					</li>
+					<li class="">
+						<div class="wkbox wx-navigate-right">
+							<div>居住地所在省市区</div>
+							<div class="pl10 autoW tr cl3c wx-input-group">
+								<input type="text" style="color: #ccc;" readonly="readonly" id='showCityPicker2' name='showCityPicker2'  value="请选择"/>
+							</div>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div>居住地详细地址</div>
+						<div class="pl10 autoW tr cl3c wx-input-group pl10">
+							<input type="text" id="liveAddr" name="liveAddr" placeholder="" maxlength="120" value="" />
+						</div>
+					</li>
+					<li class="">
+						<div class="wkbox wx-navigate-right">
+							<div>居住状态</div>
+							<div class="pl10 autoW tr cl3c wx-input-group">
+								<span class="wx-form-text">请选择</span>
+								<select id="livest" name="livest" class="wx-select">
+									<option value="">请选择</option>
+								<option value="100">自有住房</option>
+								<option value="201">普通租房</option>
+								<option value="202">借宿</option>
+								<option value="999">其他</option>
+								</select>
+							</div>
+						</div>
+					</li>
+					<li class="">
+						<div class="wkbox wx-navigate-right">
+							<div>婚姻状况</div>
+							<div class="pl10 autoW tr cl3c wx-input-group">
+								<span class="wx-form-text">请选择</span>
+								<select onchange="showMore(this)" id="marriag" name="marriag" class="wx-select">
+									<option value="">请选择</option>
+									<option value="10">未婚</option>
+									<option value="20">已婚</option>
+									<option value="30">丧偶</option>
+									<option value="40">离婚</option>
+								</select>
+							</div>
+						</div>
+					</li>
+					<li class="wkbox" style="display: none;">
+						<div class="tl">配偶姓名</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="spouseNm" name='spouseNm' value="" type="text" placeholder="" maxlength="30" />
+						</div>
+					</li>
+					<li class="wkbox" style="display: none;">
+						<div class="tl">配偶证件号码</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="spouseIdno" name='spouseIdno' value="" type="text" placeholder="" maxlength="30" />
+						</div>
+					</li>
+					<li class="">
+						<div class="wkbox wx-navigate-right">
+							<div>学历</div>
+							<div class="pl10 autoW tr cl3c wx-input-group">
+								<span class="wx-form-text">请选择</span>
+								<select id="highestEdu" name="highestEdu" class="wx-select">
+									<option value="">请选择</option>
+									<option value="11">博士研究生毕业</option>
+									<option value="14">硕士研究生毕业</option>
+									<option value="20">大学本科</option>
+									<option value="30">专科教育</option>
+									<option value="40">中等职业教育</option>
+									<option value="60">普通高级中学教育</option>
+									<option value="90">其他</option>
+								</select>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript" src="vendor/mui/js/mui.min.js"></script>
+		<script type="text/javascript" src="vendor/mui/js/mui.listpicker.js"></script>
+		<script type="text/javascript" src="vendor/mui/js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="vendor/mui/js/xian.data.js"></script>
+		<script type="text/javascript">
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var cityPicker = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker.setData(cityData);
+					var showCityPickerButton = doc.getElementById('showCityPicker');
+					showCityPickerButton.addEventListener('click', function(event) {
+						cityPicker.show(function(items) {
+							showCityPickerButton.style.color = '#333';
+							showCityPickerButton.value = items[0].text+' '+items[1].text+' '+items[2].text;
+						});
+					}, false);
+					var showCityPickerButton2 = doc.getElementById('showCityPicker2');
+					showCityPickerButton2.addEventListener('click', function(event) {
+						cityPicker.show(function(items) {
+							showCityPickerButton2.style.color = '#333';
+							showCityPickerButton2.value = items[0].text+' '+items[1].text+' '+items[2].text;
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+		<script type="text/javascript">
+			function showMore(obj) {
+				if ($(obj).val() == '20') {
+					$(obj).parent().parent().parent().nextAll().show();
+				} else {
+					$(obj).parent().parent().parent().next().hide();
+					$(obj).parent().parent().parent().next().next().hide();
+				}
+			}
+
+			function submitForm() {
+  				if ($('#showCityPicker').val() == '请选择') {
+					alert('请选择通讯地所在省市区');
+					return false;
+				}
+				if ($('#mchtAddr').val() == '') {
+					alert('请输入正确的通讯地详细地址');
+					return false;
+				}
+				if ($('#showCityPicker2').val() == '请选择') {
+					alert('请选择居住地所在省市区');
+					return false;
+				}
+				if($('#liveAddr').val() == '') {
+					alert('请输入正确的居住地详细地址');
+					return false;
+				}
+				if($('#livest').val() == '') {
+					alert('请选择居住状态');
+					return false;
+				}
+				if ($('#marriag').val() == '') {
+					alert('请选择婚姻状况');
+					return false;
+				} 
+				if ($('#spouseNm').is(':visible')){
+					if ($('#spouseNm').val() == '') {
+						alert('请输入配偶姓名');
+						return false;
+					}
+				} 
+				if ($('#spouseIdno').is(':visible')){
+					if ($('#spouseIdno').val() == '') {
+						alert('请输入配偶姓名');
+						return false;
+					}
+				}
+				if ($('#highestEdu').val() == '') {
+					alert('请选择学历');
+					return false;
+				}
+      		   $("#myForm").attr("action", "applySecond");
+      		   $("#myForm").submit();
+			}
+		</script>
+	</body>
+
+</html>

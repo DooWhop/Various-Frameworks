@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="posl_khfwxy_spd" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1637"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="certno" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="protocolno" class="java.lang.String"/>
+	<field name="acctno" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[火融e委托扣款授权书]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="703" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-1" width="555" height="59"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[尊敬的客户：
+为了维护您的权益，请在签署本授权书前，仔细阅读本授权书各条款关注您在本授权书中的权利、义务（尤其是加黑部分对您权利义务影响重大的部分），您对本授权书所有条款内容已充分理解、知晓且不存在任何疑义和歧义，否则请勿继续进行后续相关操作。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="115" width="203" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[被授权人： 上海通华资产管理有限公司]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="99" width="140" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="67" width="65" height="15"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[授权人：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="67" width="140" height="15"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="99" width="65" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签署日期：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="82" width="203" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[证件类型：中华人民共和国居民身份证 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="131" width="555" height="142"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[授权人在此同意并不可撤销地授权被授权人在火融e业务中进行如下操作：
+
+被授权人有权根据合作金融机构的扣款指令委托合作的银行或支付机构或其他具备合法资质的机构从授权人指定的本人名下的银行个人结算账户中,对火融e的还款款项进行划扣操作。
+
+被授权人有权按照与授权人签署的《火融e客户服务协议》的约定，委托合作的银行或支付机构或其他具备合法资质的机构从授权人指定的本人名下银行个人结算账户，对火融e的数据服务费和管理费进行划扣操作。
+
+如授权人未按时进行火融e的还款及还息，导致债务转移至被授权人处。被授权人有权委托合作的银行或支付机构或其他具备合法资质的机构从授权人指定的本人名下个人结算账户中，对火融e的还款款项及罚息进行划扣操作。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="273" width="119" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[授权人指定账户（户名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="273" width="87" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="204" y="273" width="56" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[银行账号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="273" width="157" height="16"/>
+				<textElement>
+					<font isUnderline="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{acctno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="417" y="273" width="138" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[）作为进行火融e管理费和还款]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="289" width="138" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[款项划扣的账户。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="305" width="553" height="263"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[授权人保证指定账户为其名下合法账户，如因授权人绑定的银行账户异常（如挂失、冻结、被盗等）等原因造成无法及时扣款或扣款错误、失败的，授权人应自行承担全部责任。
+
+授权人在还款日前须保证指定账户中留有足够还款余额并未被冻结，以保证成功划扣，否则因账户余额不足或其他不可归责于被授权人的任何事由，导致无法及时扣款或扣款错误、失败的，授权人应自行承担相应后果和责任。
+
+如您在申请支用时上述银行卡不足以支付上述管理费的，您有义务向卡内补足，如不补足通华资产有权通知合作金融机构暂停您该笔授信额度项下贷款的发放，有权终止贷款合同并要求提前还款。
+
+由被授权人或通华资产合作金融机构原因导致还款失败的，由此引起的罚息由过错方（被授权人或通华资产合作金融机构）承担。失败款项将直接退至授权人的指定账户，授权人可对该款项进行提现或重新发起还款申请。
+
+授权人同意本授权书以数据电文形式订立；授权人一旦在线勾选确认同意本授权书，本授权书即时生效,有效期至授权人书面通知被授权人终止本授权之日截止。
+
+授权人如拟撤销本授权，应至少提前30个工作日书面向被授权人发送撤销通知，否则自行承担一切不利后果。
+
+授权人保证本授权书的真实性、合法性、有效性并出于本人的真实意愿，由本授权书进行的委托扣款操作引起的一切法律后果、纠纷或风险，由授权人独立承担或解决。]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="643" width="140" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{certno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="676" width="65" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[协议编号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="660" width="140" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="676" width="139" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{protocolno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="628" width="65" height="15"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[客户姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="628" width="140" height="15"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="660" width="65" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签署日期：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="643" width="65" height="18"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[身份证号码：]]></text>
+			</staticText>
+		</band>
+		<band height="703"/>
+		<band height="435"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

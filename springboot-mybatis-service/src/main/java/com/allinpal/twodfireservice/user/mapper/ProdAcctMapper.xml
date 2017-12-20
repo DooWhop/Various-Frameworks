@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.allinpal.twodfireservice.user.mapper.ProdAcctMapper" >
+	<select id="queryProdAcct" resultType="com.allinpal.twodfireservice.user.domain.ProdAcct">
+		select acct.acct_id as acctId, acct.user_id as userId, acct.user_card_id as userCardId, acct.prod_code as prodCode, 
+			acct.legal_name as legalName, acct.mobile as mobile, acct.cert_no as certNo, acct.merchant_no as merchantNo, 
+		    acct.busi_cert_no as busiCertNo, acct.status, acct.expire_time as expireTime, acct.create_uid as createUid, 
+		    acct.create_time as createTime, acct.last_modify_uid as lastModifyUid, acct.last_modify_time as lastModifyTime,
+		    card.bank_iden_name as bankIdenName, card.bank_iden_code as bankIdenCode, card.acct_no as acctNo
+		from 2dfire.t_prod_acct acct
+		left join 2dfire.t_user_card card
+		on acct.user_card_id = card.record_no and card.status = 1
+		where 1=1
+		<if test="mobile != null">
+			and acct.mobile = #{mobile}
+		</if>
+		<if test="busiCertNo != null">
+			and acct.busi_cert_no = #{busiCertNo}
+		</if>
+		<if test="certNo != null">
+			and acct.cert_no = #{certNo}
+		</if>
+		<if test="status != null">
+			and acct.status = #{status}
+		</if>
+		<if test="merchantNo != null">
+			and acct.merchant_no = #{merchantNo}
+		</if>
+	</select>
+	
+	<insert id="saveProdAcct" parameterType="com.allinpal.twodfireservice.user.domain.ProdAcct" >
+	    insert into 2dfire.t_prod_acct
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="acctId != null">
+	        acct_id,
+	      </if>
+	      <if test="userId != null">
+	        user_id,
+	      </if>
+	      <if test="userCardId != null">
+	        user_card_id,
+	      </if>
+	      <if test="prodCode != null">
+	        prod_code,
+	      </if>
+	      <if test="legalName != null">
+	        legal_name,
+	      </if>
+	      <if test="mobile != null">
+	        mobile,
+	      </if>
+	      <if test="certNo != null">
+	        cert_no,
+	      </if>
+	      <if test="merchantNo != null">
+	        merchant_no,
+	      </if>
+	      <if test="busiCertNo != null">
+	        busi_cert_no,
+	      </if>
+	      <if test="status != null">
+	        status,
+	      </if>
+	      <if test="expireTime != null">
+	        expire_time,
+	      </if>
+	      <if test="createUid != null">
+	        create_uid,
+	      </if>
+	      <if test="createTime != null">
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null">
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null">
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="acctId != null">
+	        #{acctId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="userId != null">
+	        #{userId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="userCardId != null">
+	        #{userCardId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="prodCode != null">
+	        #{prodCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="legalName != null">
+	        #{legalName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobile != null">
+	        #{mobile,jdbcType=VARCHAR},
+	      </if>
+	      <if test="certNo != null">
+	        #{certNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="merchantNo != null">
+	        #{merchantNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="busiCertNo != null">
+	        #{busiCertNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null">
+	        #{status,jdbcType=VARCHAR},
+	      </if>
+	      <if test="expireTime != null">
+	        #{expireTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="createUid != null">
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null">
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null">
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null">
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+  	</insert>
+	
+</mapper>

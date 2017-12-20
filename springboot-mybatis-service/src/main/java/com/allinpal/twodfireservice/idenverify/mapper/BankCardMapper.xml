@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+        
+<mapper namespace="com.allinpal.twodfireservice.idenverify.mapper.IdenVerifyMapper">
+    
+  <!--   <resultMap id="BankcardMap" type="com.allinpal.twodfireservice.idenverify.domain.BankCard" >  
+        <result column="record_no" property="recordNo" jdbcType="VARCHAR" />  
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />  
+        <result column="acct_name" property="acctName" jdbcType="VARCHAR" />  
+        <result column="cert_type" property="certType" jdbcType="VARCHAR" />  
+        <result column="cert_no" property="certNo" jdbcType="VARCHAR" />  
+        <result column="bank_iden_name" property="bankIdenName" jdbcType="VARCHAR" />  
+        <result column="bank_iden_code" property="bankIdenCode" jdbcType="VARCHAR" />  
+        <result column="acct_no" property="acctNo" jdbcType="VARCHAR" />  
+        <result column="hp_no" property="hpNo" jdbcType="VARCHAR" />  
+        <result column="verify_mode" property="verifyMode" jdbcType="VARCHAR" />  
+        <result column="verify_code" property="verifyCode" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />  
+        <result column="remark" property="remark" jdbcType="VARCHAR" /> 
+        <result column="create_uid" property="createUid" jdbcType="VARCHAR" /> 
+        <result column="create_time" property="createTime" jdbcType="INTEGER" /> 
+        <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" /> 
+        <result column="last_modify_time" property="lastModifyTime" jdbcType="INTEGER" /> 
+    </resultMap> 
+    
+    
+    <select id="getBankCardById" resultMap="BankcardMap">
+        select * from t_user_card where record_no = #{id}
+    </select> 
+    
+    <select id="getUserIdByPhone" resultType="java.lang.String">
+        select user_id from t_user where mobile = #{phone} and status=1
+    </select> -->
+    
+    <select id="queryBankCard" resultType="java.lang.Integer">
+        select count(*) from 2dfire.t_user_card 
+        where status=1
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="bankIdenCode != null">
+			and bank_iden_code = #{bankIdenCode}
+		</if>
+		<if test="hpNo != null">
+			and hp_no = #{hpNo}
+		</if>
+		<if test="acctNo != null">
+			and acct_no = #{acctNo}
+		</if>
+		<if test="certNo != null">
+			and cert_no = #{certNo}
+		</if>       
+    </select>
+    
+    
+    <select id="queryIdenFile" resultType="java.lang.Integer">
+        select count(*) from 2dfire.t_user_iden_file 
+        where status='10' and ocr_state='20'
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="prodCode != null">
+			and prod_code = #{prodCode}
+		</if>
+		<if test="fileType != null">
+			and file_type = #{fileType}
+		</if>
+		<if test="idenFace != null">
+			and iden_face = #{idenFace}
+		</if>
+		<if test="fileId != null">
+			and file_id = #{fileId}
+		</if>
+		<if test="fileName != null">
+			and file_name = #{fileName}
+		</if>       
+    </select>
+    
+       
+    <select id="getSupportBanks" resultType="java.util.Map">
+        select bank_iden_code,bank_iden_name from 2dfire.t_prod_support_bank 
+        where prod_code = #{prodCode} and status=1
+    </select>
+       
+    <insert id="saveBankCard">
+        insert into 2dfire.t_user_card 
+        values(
+            #{recordNo},
+            #{userId},
+            #{acctName},
+            #{certType},
+            #{certNo},
+            #{bankIdenName},
+            #{bankIdenCode},
+            #{acctNo},
+            #{hpNo},
+            #{verifyMode},
+            #{verifyCode},
+            #{status},
+            #{remark},
+            #{createUid},
+            #{createTime},
+            #{lastModifyUid},
+            #{lastModifyTime}           
+            )
+    </insert>
+    
+     <update id="updateIdenFile">
+        update 2dfire.t_user_iden_file 
+        set ocr_state='20'
+        where file_type = '1' and ocr_state = '10' and user_id = #{userId} and iden_face = #{idenFace}
+    </update>  
+    
+    <insert id="saveIdenFile">
+        insert into 2dfire.t_user_iden_file 
+        values(
+            #{recordNo},
+            #{userId},
+            #{prodCode},
+            #{fileType},
+            #{idenFace},
+            #{filePath},
+            #{fileId},
+            #{fileName},
+            #{fileDesc},
+            #{status},
+            #{ocrState},
+            #{createUid},
+            #{createTime},
+            #{lastModifyUid},
+            #{lastModifyTime}           
+            )
+    </insert>
+    
+    <select id="getBusiCerNoByMerchantNo" resultType="java.lang.String">
+        select license_code from 2dfire.cal_2dfire_month_metadata where entity_id = #{merchantNo} limit 1
+    </select>
+    
+      <select id="getTlbOidByUserId" resultType="java.lang.String">
+        select tlb_user_oid from 2dfire.t_user where user_id = #{userId} and status=1 limit 1
+    </select>
+</mapper>

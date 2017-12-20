@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.allinpal.twodfireservice.user.mapper.UserMapper" >
+  <select id="queryUserInfo" resultType="com.allinpal.twodfireservice.user.domain.User">
+  	select user.user_id as userId, user.mobile, user.status, user.tlb_user_oid as tlbUserOid, user.investor_oid as investorOid,
+	  	user.expire_time as expireTime, user.create_uid as createUid, user.create_time as createTime, 
+	  	user.last_modify_uid as lastModifyUid, user.last_modify_time as lastModifyTime,
+	  	user.merchant_no as merchantNo
+	from 2dfire.t_user user
+  	where 1=1
+  	<if test="merchantNo != null and merchantNo != ''">
+  		and user.merchant_no = #{merchantNo}
+  	</if>
+  	<if test="mobile != null and mobile != ''">
+  		and user.mobile = #{mobile}
+  	</if>
+  	<if test="status != null and status != ''">
+  		and user.status = #{status}
+  	</if>
+  	<if test="userId != null and userId != ''">
+  		and user.user_id = #{userId}
+  	</if>
+  </select>
+  
+  <select id="queryUserCardInfo" resultType="com.allinpal.twodfireservice.user.domain.ProdAcct">
+  	select user.user_id as userId, user.mobile, user.status, user.expire_time as expireTime, user.create_uid as createUid, 
+  	user.create_time as createTime, user.last_modify_uid as lastModifyUid, user.last_modify_time as lastModifyTime,
+  	user.merchant_no as merchantNo,card.acct_no as acctNo,card.bank_iden_name bankIdenName,acct.legal_name legalName
+  	from 2dfire.t_user user
+  	left join 2dfire.t_user_card card on card.user_id = user.user_id and card.status = '1'
+  	left join 2dfire.t_prod_acct acct on acct.user_id = user.user_id and acct.status = '1'
+  	where 1=1
+  	<if test="merchantNo != null and merchantNo != ''">
+  		and user.merchant_no = #{merchantNo}
+  	</if>
+  	<if test="mobile != null and mobile != ''">
+  		and user.mobile = #{mobile}
+  	</if>
+  	<if test="status != null and status != ''">
+  		and user.status = #{status}
+  	</if>
+  </select>
+  
+   <select id="queryCreditCount" resultType="com.allinpal.twodfireservice.user.domain.LoanCreditInfo" parameterType="com.allinpal.twodfireservice.user.domain.User">
+   		select a.merchant_no as merchantNo, a.prod_code as prodCode, a.user_id as userId, a.acct_id as acctId,a.status,a.mobile
+		from 2dfire.t_loan_credit_req a
+		left join 2dfire.t_user b
+		on a.user_id = b.user_id
+		where a.user_id = #{userId}
+		and a.merchant_no = #{merchantNo}
+		order by a.create_time desc
+   </select>
+   
+   <select id="queryCardCount" resultType="int" parameterType="com.allinpal.twodfireservice.user.domain.User">
+   		select count(*) 
+		from 2dfire.t_user_card a
+		left join 2dfire.t_user b
+		on a.user_id = b.user_id
+		where a.user_id = #{userId}
+		and a.status = #{cardStatus}
+   </select>
+   
+   <select id="queryUserIdenFile" resultType="int" parameterType="com.allinpal.twodfireservice.user.domain.User">
+   		select count(*) 
+		from 2dfire.t_user_iden_file a
+		left join 2dfire.t_user b
+		on a.user_id = b.user_id
+		where a.user_id = #{userId}
+		and a.ocr_state = #{ocrState}
+		and a.file_type = '1'
+   </select>
+  
+  <insert id="addUserInfo" parameterType="com.allinpal.twodfireservice.user.domain.User">
+        insert into 2dfire.t_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="userId != null" >
+	        user_id,
+	      </if>
+	      <if test="mobile != null" >
+	        mobile,
+	      </if>
+	      <if test="status != null" >
+	        status,
+	      </if>
+	      <if test="tlbUserOid != null">
+	        tlb_user_oid,
+	      </if>
+	      <if test="merchantNo != null">
+	        merchant_no,
+	      </if>
+	      <if test="investorOid != null">
+	        investor_oid,
+	      </if>
+	      <if test="expireTime != null" >
+	        expire_time,
+	      </if>
+	      <if test="createUid != null" >
+	        create_uid,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        last_modify_uid,
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        last_modify_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="userId != null" >
+	        #{userId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobile != null" >
+	        #{mobile,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null" >
+	        #{status,jdbcType=VARCHAR},
+	      </if>
+	      <if test="tlbUserOid != null">
+	        #{tlbUserOid,jdbcType=DECIMAL},
+	      </if>
+	      <if test="merchantNo != null">
+	        #{merchantNo,jdbcType=VARCHAR},
+	      </if>
+	      <if test="investorOid != null">
+	        #{investorOid,jdbcType=DECIMAL},
+	      </if>
+	      <if test="expireTime != null" >
+	        #{expireTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="createUid != null" >
+	        #{createUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime,jdbcType=BIGINT},
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        #{lastModifyUid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        #{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+	    </trim>
+    </insert>
+</mapper>

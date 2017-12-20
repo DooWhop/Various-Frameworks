@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinpal.twodfireservice.repayService.mapper.RepayPlanMapper">
+	<resultMap id="RepayPlanResultMap" type="com.allinpal.twodfireservice.repayService.domain.RepayPlan" >
+	    <id column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+	    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+	    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+	    <result column="tpnum" jdbcType="INTEGER" property="tpnum" />
+	    <result column="pay_date" property="payDate" jdbcType="VARCHAR" />
+	    <result column="pay_rate" property="payRate" jdbcType="DECIMAL" />
+	    <result column="pay_totamt" property="payTotamt" jdbcType="DECIMAL" />
+	    <result column="pay_prinamt" property="payPrinamt" jdbcType="DECIMAL" />
+	    <result column="pay_inteamt" property="payInteamt" jdbcType="DECIMAL" />
+	    <result column="start_balamt" property="startBalamt" jdbcType="DECIMAL" />
+	    <result column="end_balamt" property="endBalamt" jdbcType="DECIMAL" />
+	    <result column="charge_amt" property="chargeAmt" jdbcType="DECIMAL" />
+	    <result column="remark" property="remark" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+   </resultMap>
+
+	<select id="getRepayList" parameterType="com.allinpal.twodfireservice.repayService.domain.RepayPlan" resultMap="RepayPlanResultMap">
+       select * from 2dfire.t_loan_repay_plan 
+		where 1=1
+	      <if test="useRecordNo != null" >
+	        and use_record_no=#{useRecordNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="recordNo != null" >
+	        and record_no=#{recordNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="prodCode != null" >
+	        and prod_code=#{prodCode,jdbcType=VARCHAR}
+	      </if>
+	      <if test="contractNo != null" >
+	        and contract_no=#{contractNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="tpnum != null" >
+	        and tpnum=#{tpnum,jdbcType=VARCHAR}
+	      </if>
+	      <if test="payDate != null" >
+	        and pay_date=#{payDate,jdbcType=VARCHAR}
+	      </if>
+	      <if test="payRate != null" >
+	        and pay_rate=#{payRate,jdbcType=DECIMAL}
+	      </if>
+	      <if test="payTotamt != null" >
+	        and pay_totamt=#{payTotamt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="payPrinamt != null" >
+	        and pay_prinamt=#{payPrinamt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="payInteamt != null" >
+	        and pay_inteamt=#{payInteamt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="startBalamt != null" >
+	        and start_balamt=#{startBalamt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="endBalamt != null" >
+	        and end_balamt=#{endBalamt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="chargeAmt != null" >
+	        and charge_amt=#{chargeAmt,jdbcType=DECIMAL}
+	      </if>
+	      <if test="remark != null" >
+	        and remark=#{remark,jdbcType=VARCHAR}
+	      </if>
+	      <if test="createUid != null" >
+	        and create_uid=#{createUid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="createTime != null" >
+	        and create_time=#{createTime,jdbcType=BIGINT}
+	      </if>
+	      <if test="lastModifyUid != null" >
+	        and last_modify_uid=#{lastModifyUid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="lastModifyTime != null" >
+	        and last_modify_time=#{lastModifyTime,jdbcType=BIGINT}
+	      </if>
+		order by tpnum asc
+   </select>
+</mapper>

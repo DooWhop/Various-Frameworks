@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>我的火融e账户</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+	</head>
+
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">我的火融e账户</h1>
+		</header>
+		<div class="fixBottom bgf fh1 pb20">
+			<div class="wx-btn wx-btnh" onclick="exit()">返回火掌柜</div>
+		</div>
+		<div class="wx-content">
+		<div class="top-account" >
+			<div class="clf tc f20 mt26"><span th:text="${legalName}" /></div>
+			<div class="clf tc opa7 mt6"><span th:text="${mobileStr}"/></div>
+			<div class="wx-tx-box">
+				<img src="images/icon-500.png" />
+			</div>
+		</div>
+		<form id="myForm" name='myForm' action="" method="post">
+				<input type="hidden" name="merchantNo" id="merchantNo" th:value='${merchantNo}' />
+				<input type="hidden" name="mobile" id="mobile" th:value='${mobile}' />
+				<input type="hidden" name="userId" id="userId" th:value='${userId}' />
+				<input type="hidden" name="prodCode" id="prodCode" th:value='9002000003' />
+			</form>
+		<ul class="wx-formlist wx-formlist-mh">
+			<li class="wkbox" onclick="javascript:myBankCard()">
+				<div class="autoW tl cl9">我的银行卡</div>
+				<div class="cl3"><span th:text="${bankIdenName}"/> 尾号<span th:text="${acctNo}"/></div>
+				<div class="tr wx-navigate-right pl4"></div>
+			</li>
+			<li class="wkbox" onclick="javascript:queryCreditList()">
+				<div class="autoW tl cl9">我的火融e账户贷款</div>
+				<div class="autoW tr wx-navigate-right"></div>
+			</li>
+		</ul>
+		</div>
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js" ></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript">
+			function myBankCard(){
+				$("#myForm").attr("action", "toMybankCard");
+		  		   $("#myForm").submit();
+			}
+			function queryCreditList(){
+		  		   $("#myForm").attr("action", "queryCreditList");
+		  		   $("#myForm").submit();
+			}
+		</script>
+	</body>
+
+</html>

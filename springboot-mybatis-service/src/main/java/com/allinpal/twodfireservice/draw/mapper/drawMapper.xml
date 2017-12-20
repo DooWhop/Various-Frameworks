@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinpal.twodfireservice.draw.mapper.DrawMapper">
+
+    <resultMap id="drawResultMap" type="com.allinpal.twodfireservice.draw.domain.Draw">
+    	<result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="credit_record_no" property="creditRecordNo" jdbcType="VARCHAR" />
+	    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+	    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+	    <result column="prod_code" property="prodCode" jdbcType="VARCHAR" />
+	    <result column="lmt_serno" property="lmtSerno" jdbcType="VARCHAR" />
+	    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+	    <result column="use_date" property="useDate" jdbcType="VARCHAR" />
+	    <result column="retu_acno" property="retuAcno" jdbcType="VARCHAR" />
+	    <result column="loan_cust_name" property="loanCustName" jdbcType="VARCHAR" />
+	    <result column="loan_certtype_name" property="loanCerttypeName" jdbcType="VARCHAR" />
+	    <result column="loan_cert_no" property="loanCertNo" jdbcType="VARCHAR" />
+	    <result column="loan_cust_addr" property="loanCustAddr" jdbcType="VARCHAR" />
+	    <result column="loan_phone" property="loanPhone" jdbcType="VARCHAR" />
+	   	<result column="app_amt" property="appAmt" jdbcType="DECIMAL" />
+	   	<result column="base_amount" property="baseAmount" jdbcType="DECIMAL" />
+	   	<result column="appl_term" property="applTerm" jdbcType="VARCHAR" />
+	   	<result column="app_start_date" property="appStartDate" jdbcType="VARCHAR" />
+	    <result column="app_end_date" property="appEndDate" jdbcType="VARCHAR" />
+	    <result column="loan_yrate" property="loanYrate" jdbcType="DECIMAL" />
+	    <result column="loan_balance" property="loanBalance" jdbcType="DECIMAL" />
+	    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+	    <result column="manager_fee" property="managerFee" jdbcType="DECIMAL" />
+	    <result column="loan_use" property="loanUse" jdbcType="VARCHAR" />
+	    <result column="loan_payway" property="loanPayway" jdbcType="VARCHAR" />
+	    <result column="loan_overup_rate" property="loanOverupRate" jdbcType="DECIMAL" />
+	    <result column="use_sign_flag" property="useSignFlag" jdbcType="VARCHAR" />
+	    <result column="use_sign_time" property="useSignTime" jdbcType="BIGINT" />
+	    <result column="withhold_protocol" property="withholdProtocol" jdbcType="VARCHAR" />
+	    <result column="withhold_protocol_time" property="withholdProtocolTime" jdbcType="BIGINT" />
+	    <result column="borrow_protocol" property="borrowProtocol" jdbcType="VARCHAR" />
+	    <result column="borrow_protocol_time" property="borrowProtocolTime" jdbcType="BIGINT" />
+	    <result column="access_time" property="accessTime" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="fail_code" property="failCode" jdbcType="VARCHAR" />
+	    <result column="describle" property="describle" jdbcType="VARCHAR" />
+	    <result column="package_id" property="packageId" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+	  </resultMap>
+	  
+	<resultMap id="chargeResultMap" type="com.allinpal.twodfireservice.draw.domain.Charge">
+    	<result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+	    <result column="use_record_no" property="useRecordNo" jdbcType="VARCHAR" />
+	    <result column="acct_id" property="acctId" jdbcType="VARCHAR" />
+	    <result column="cur_date" property="curDate" jdbcType="VARCHAR" />
+	    <result column="base_amount" property="baseAmount" jdbcType="VARCHAR" />
+	    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+	    <result column="service_rate" property="serviceRate" jdbcType="DECIMAL" />
+	    <result column="manager_fee" property="managerFee" jdbcType="DECIMAL" />
+	    <result column="manager_rate" property="managerRate" jdbcType="DECIMAL" />
+	    <result column="tolamount" property="tolamount" jdbcType="DECIMAL" />
+	    <result column="deduct_count" property="deductCount" jdbcType="INTEGER" />
+	    <result column="proc_state" property="procState" jdbcType="VARCHAR" />
+	    <result column="recon_flag" property="reconFlag" jdbcType="VARCHAR" />
+	    <result column="recon_time" property="reconTime" jdbcType="BIGINT" />
+	    <result column="remark" property="remark" jdbcType="VARCHAR" />
+	    <result column="create_uid" property="createUid" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+	    <result column="last_modify_uid" property="lastModifyUid" jdbcType="VARCHAR" />
+	    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+	  </resultMap>
+  
+  <select id="getProtocolData" resultType="map">
+        select
+        	credit_record_no creditRecordNo,
+        	protocol_no protocolNo,
+        	original_pdffile_id originalPdffileId,
+        	batch_no batchNo,
+        	use_record_no useRecordNo,
+        	original_zipfile_id originalZipfileId
+        from 2dfire.t_loan_protocol where credit_record_no = #{recordNo} and protocol_type='4' and appl_term=#{applTerm}
+    	limit 1
+    </select>
+    <select id="getReqData" resultType="map">
+        select
+        	lmt_serno,
+        	mobile,
+        	cust_name,
+        	cert_no,
+        	bank_name,
+        	bank_code,
+        	bank_acct_no,
+        	emp_phone,
+        	<if test="timeLimit == 6">
+        		 six_month_amt appl_amt,
+        	</if>
+        	<if test="timeLimit == 12">
+        		 twelve_month_amt appl_amt,
+        	</if>
+        	pay_rate,
+        	status,
+        	lmt_end_date,
+        	live_city,
+        	live_addr,
+        	marriag,
+        	org_code,
+        	prod_code,
+        	merchant_no,
+        	create_time createTime
+        from 2dfire.t_loan_credit_req where record_no = #{recordNo}
+        
+    </select>
+    
+    <select id="queryUseInfo" parameterType="com.allinpal.twodfireservice.draw.domain.Draw" resultMap="drawResultMap">
+		select * from 2dfire.t_loan_use_req
+			where 1=1
+			<if test="recordNo != null">
+		        and record_no=#{recordNo}
+		      </if>
+		      <if test="creditRecordNo != null">
+		        and credit_record_no=#{creditRecordNo}
+		      </if>
+		      <if test="acctId != null">
+		        and acct_id=#{acctId}
+		      </if>
+		      <if test="orgCode != null">
+		        and org_code=#{orgCode}
+		      </if>
+		      <if test="prodCode != null">
+		        and prod_code=#{prodCode}
+		      </if>
+		      <if test="lmtSerno != null">
+		        and lmt_serno=#{lmtSerno}
+		      </if>
+		      <if test="billNo != null">
+		        and bill_no=#{billNo}
+		      </if>
+		      <if test="useDate != null">
+		        and use_date=#{useDate}
+		      </if>
+		      <if test="retuAcno != null">
+		        and retu_acno=#{retuAcno}
+		      </if>
+		      <if test="loanCustName != null">
+		        and loan_cust_name=#{loanCustName}
+		      </if>
+		      <if test="loanCerttypeName != null">
+		        and loan_certtype_name=#{loanCerttypeName}
+		      </if>
+		      <if test="loanCertNo != null">
+		        and loan_cert_no=#{loanCertNo}
+		      </if>
+		      <if test="loanCustAddr != null">
+		        and loan_cust_addr=#{loanCustAddr}
+		      </if>
+		      <if test="loanPhone != null">
+		        and loan_phone=#{loanPhone}
+		      </if>
+		      <if test="appAmt != null">
+		        and app_amt=#{appAmt}
+		      </if>
+		      <if test="baseAmount != null">
+		        and base_amount=#{baseAmount}
+		      </if>
+		      <if test="applTerm != null">
+		        and appl_term=#{applTerm}
+		      </if>
+		      <if test="appStartDate != null">
+		        and app_start_date=#{appStartDate}
+		      </if>
+		      <if test="appEndDate != null">
+		        and app_end_date=#{appEndDate}
+		      </if>
+		      <if test="loanYrate != null">
+		        and loan_yrate=#{loanYrate}
+		      </if>
+		      <if test="loanBalance != null">
+		        and loan_balance=#{loanBalance}
+		      </if>
+		      <if test="serviceFee != null">
+		        and service_fee=#{serviceFee}
+		      </if>
+		      <if test="managerFee != null">
+		        and manager_fee=#{managerFee}
+		      </if>
+		      <if test="loanUse != null">
+		        and loan_use=#{loanUse}
+		      </if>
+		      <if test="loanPayway != null">
+		        and loan_payway=#{loanPayway}
+		      </if>
+		      <if test="loanOverupRate != null">
+		        and loan_overup_rate=#{loanOverupRate}
+		      </if>
+		      <if test="useSignFlag != null">
+		        and use_sign_flag=#{useSignFlag}
+		      </if>
+		      <if test="useSignTime != null">
+		        and use_sign_time=#{useSignTime}
+		      </if>
+		      <if test="withholdProtocol != null">
+		        and withhold_protocol=#{withholdProtocol}
+		      </if>
+		      <if test="withholdProtocolTime != null">
+		        and withhold_protocol_time=#{withholdProtocolTime}
+		      </if>
+		      <if test="borrowProtocol != null">
+		        and borrow_protocol=#{borrowProtocol}
+		      </if>
+		      <if test="borrowProtocolTime != null">
+		        and borrow_protocol_time=#{borrowProtocolTime}
+		      </if>
+		      <if test="accessTime != null">
+		        and access_time=#{accessTime}
+		      </if>
+		      <if test="status != null">
+		        and status=#{status}
+		      </if>
+		      <if test="failCode != null">
+		        and fail_code=#{failCode}
+		      </if>
+		      <if test="describle != null">
+		        and describle=#{describle}
+		      </if>
+		      <if test="packageId != null">
+		        and package_id=#{packageId}
+		      </if>
+		      <if test="createUid != null">
+		        and create_uid=#{createUid}
+		      </if>
+		      <if test="createTime != null">
+		        and create_time=#{createTime}
+		      </if>
+		      <if test="lastModifyUid != null">
+		        and last_modify_uid=#{lastModifyUid}
+		      </if>
+		      <if test="lastModifyTime != null">
+		        and last_modify_time=#{lastModifyTime}
+		      </if>
+	</select>
+    
+    <insert id="saveAppInfo" useGeneratedKeys="true" keyProperty="recordNo"
+    	parameterType="com.allinpal.twodfireservice.draw.domain.Draw">
+    insert into 2dfire.t_loan_use_req
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        record_no,
+      </if>
+      <if test="creditRecordNo != null">
+        credit_record_no,
+      </if>
+      <if test="acctId != null">
+        acct_id,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="prodCode != null">
+        prod_code,
+      </if>
+      <if test="lmtSerno != null">
+        lmt_serno,
+      </if>
+      <if test="billNo != null">
+        bill_no,
+      </if>
+      <if test="useDate != null">
+        use_date,
+      </if>
+      <if test="retuAcno != null">
+        retu_acno,
+      </if>
+      <if test="loanCustName != null">
+        loan_cust_name,
+      </if>
+      <if test="loanCerttypeName != null">
+        loan_certtype_name,
+      </if>
+      <if test="loanCertNo != null">
+        loan_cert_no,
+      </if>
+      <if test="loanCustAddr != null">
+        loan_cust_addr,
+      </if>
+      <if test="loanPhone != null">
+        loan_phone,
+      </if>
+      <if test="appAmt != null">
+        app_amt,
+      </if>
+      <if test="baseAmount != null">
+        base_amount,
+      </if>
+      <if test="applTerm != null">
+        appl_term,
+      </if>
+      <if test="appStartDate != null">
+        app_start_date,
+      </if>
+      <if test="appEndDate != null">
+        app_end_date,
+      </if>
+      <if test="loanYrate != null">
+        loan_yrate,
+      </if>
+      <if test="loanBalance != null">
+        loan_balance,
+      </if>
+      <if test="serviceFee != null">
+        service_fee,
+      </if>
+      <if test="managerFee != null">
+        manager_fee,
+      </if>
+      <if test="loanUse != null">
+        loan_use,
+      </if>
+      <if test="loanPayway != null">
+        loan_payway,
+      </if>
+      <if test="loanOverupRate != null">
+        loan_overup_rate,
+      </if>
+      <if test="useSignFlag != null">
+        use_sign_flag,
+      </if>
+      <if test="useSignTime != null">
+        use_sign_time,
+      </if>
+      <if test="withholdProtocol != null">
+        withhold_protocol,
+      </if>
+      <if test="withholdProtocolTime != null">
+        withhold_protocol_time,
+      </if>
+      <if test="borrowProtocol != null">
+        borrow_protocol,
+      </if>
+      <if test="borrowProtocolTime != null">
+        borrow_protocol_time,
+      </if>
+      <if test="accessTime != null">
+        access_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="failCode != null">
+        fail_code,
+      </if>
+      <if test="describle != null">
+        describle,
+      </if>
+      <if test="packageId != null">
+		package_id,
+	  </if>
+      <if test="createUid != null">
+        create_uid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyUid != null">
+        last_modify_uid,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditRecordNo != null">
+        #{creditRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null">
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="prodCode != null">
+        #{prodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lmtSerno != null">
+        #{lmtSerno,jdbcType=VARCHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null">
+        #{useDate,jdbcType=VARCHAR},
+      </if>
+      <if test="retuAcno != null">
+        #{retuAcno,jdbcType=VARCHAR},
+      </if>
+      <if test="loanCustName != null">
+        #{loanCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="loanCerttypeName != null">
+        #{loanCerttypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="loanCertNo != null">
+        #{loanCertNo,jdbcType=CHAR},
+      </if>
+      <if test="loanCustAddr != null">
+        #{loanCustAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="loanPhone != null">
+        #{loanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="appAmt != null">
+        #{appAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="baseAmount != null">
+        #{baseAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="applTerm != null">
+        #{applTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="appStartDate != null">
+        #{appStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="appEndDate != null">
+        #{appEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="loanYrate != null">
+        #{loanYrate,jdbcType=DECIMAL},
+      </if>
+      <if test="loanBalance != null">
+        #{loanBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null">
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="managerFee != null">
+        #{managerFee,jdbcType=DECIMAL},
+      </if>
+      <if test="loanUse != null">
+        #{loanUse,jdbcType=VARCHAR},
+      </if>
+      <if test="loanPayway != null">
+        #{loanPayway,jdbcType=VARCHAR},
+      </if>
+      <if test="loanOverupRate != null">
+        #{loanOverupRate,jdbcType=DECIMAL},
+      </if>
+      <if test="useSignFlag != null">
+        #{useSignFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="useSignTime != null">
+        #{useSignTime,jdbcType=BIGINT},
+      </if>
+      <if test="withholdProtocol != null">
+        #{withholdProtocol,jdbcType=VARCHAR},
+      </if>
+      <if test="withholdProtocolTime != null">
+        #{withholdProtocolTime,jdbcType=BIGINT},
+      </if>
+      <if test="borrowProtocol != null">
+        #{borrowProtocol,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowProtocolTime != null">
+        #{borrowProtocolTime,jdbcType=BIGINT},
+      </if>
+      <if test="accessTime != null">
+        #{accessTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="failCode != null">
+        #{failCode,jdbcType=VARCHAR},
+      </if>
+      <if test="describle != null">
+        #{describle,jdbcType=BIGINT},
+      </if>
+      <if test="packageId != null">
+		 #{packageId,jdbcType=VARCHAR},
+	  </if>
+      <if test="createUid != null">
+        #{createUid,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyUid != null">
+        #{lastModifyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="saveCharge" parameterType="com.allinpal.twodfireservice.draw.domain.Charge">
+    insert into 2dfire.t_charge_reg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        record_no,
+      </if>
+      <if test="useRecordNo != null">
+        use_record_no,
+      </if>
+      <if test="acctId != null">
+        acct_id,
+      </if>
+      <if test="curDate != null">
+        cur_date,
+      </if>
+      <if test="baseAmount != null">
+        base_amount,
+      </if>
+      <if test="serviceFee != null">
+        service_fee,
+      </if>
+      <if test="serviceRate != null">
+        service_rate,
+      </if>
+      <if test="managerFee != null">
+        manager_fee,
+      </if>
+      <if test="managerRate != null">
+        manager_rate,
+      </if>
+      <if test="tolamount != null">
+        tolamount,
+      </if>
+      <if test="deductCount != null">
+        deduct_count,
+      </if>
+      <if test="procState != null">
+        proc_state,
+      </if>
+      <if test="reconFlag != null">
+        recon_flag,
+      </if>
+      <if test="reconTime != null">
+        recon_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUid != null">
+        create_uid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyUid != null">
+        last_modify_uid,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordNo != null">
+        #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="useRecordNo != null">
+        #{useRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acctId != null">
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="curDate != null">
+        #{curDate,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAmount != null">
+        #{baseAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFee != null">
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceRate != null">
+        #{serviceRate,jdbcType=DECIMAL},
+      </if>
+      <if test="managerFee != null">
+        #{managerFee,jdbcType=DECIMAL},
+      </if>
+      <if test="managerRate != null">
+        #{managerRate,jdbcType=DECIMAL},
+      </if>
+      <if test="tolamount != null">
+        #{tolamount,jdbcType=DECIMAL},
+      </if>
+      <if test="deductCount != null">
+        #{deductCount,jdbcType=INTEGER},
+      </if>
+      <if test="procState != null">
+        #{procState,jdbcType=VARCHAR},
+      </if>
+      <if test="reconFlag != null">
+        #{reconFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="reconTime != null">
+        #{reconTime,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUid != null">
+        #{createUid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyUid != null">
+        #{lastModifyUid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryChargeList" parameterType="com.allinpal.twodfireservice.draw.domain.Charge" resultMap="chargeResultMap">
+		select * from 2dfire.t_charge_reg
+			where 1=1
+	  <if test="recordNo != null">
+        and record_no=#{recordNo,jdbcType=VARCHAR}
+      </if>
+      <if test="useRecordNo != null">
+        and use_record_no=#{useRecordNo,jdbcType=VARCHAR}
+      </if>
+      <if test="acctId != null">
+        and acct_id=#{acctId,jdbcType=VARCHAR}
+      </if>
+      <if test="curDate != null">
+        and cur_date=#{curDate,jdbcType=VARCHAR}
+      </if>
+      <if test="baseAmount != null">
+        and base_amount=#{baseAmount,jdbcType=VARCHAR}
+      </if>
+      <if test="serviceFee != null">
+        and service_fee=#{serviceFee,jdbcType=DECIMAL}
+      </if>
+      <if test="serviceRate != null">
+        and service_rate=#{serviceRate,jdbcType=DECIMAL}
+      </if>
+      <if test="managerFee != null">
+        and manager_fee=#{managerFee,jdbcType=DECIMAL}
+      </if>
+      <if test="managerRate != null">
+        and manager_rate=#{managerRate,jdbcType=DECIMAL}
+      </if>
+      <if test="tolamount != null">
+        and tolamount=#{tolamount,jdbcType=DECIMAL}
+      </if>
+      <if test="deductCount != null">
+        and deduct_count=#{deductCount,jdbcType=INTEGER}
+      </if>
+      <if test="procState != null">
+        and proc_state=#{procState,jdbcType=VARCHAR}
+      </if>
+      <if test="reconFlag != null">
+        and recon_flag=#{reconFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="reconTime != null">
+        and recon_time=#{reconTime,jdbcType=BIGINT}
+      </if>
+      <if test="remark != null">
+        and remark=#{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="createUid != null">
+        and create_uid=#{createUid,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null">
+        and create_time=#{createTime,jdbcType=BIGINT}
+      </if>
+      <if test="lastModifyUid != null">
+        and last_modify_uid=#{lastModifyUid,jdbcType=VARCHAR}
+      </if>
+      <if test="lastModifyTime != null">
+        and last_modify_time=#{lastModifyTime,jdbcType=BIGINT}
+      </if>
+	</select>
+	
+	<update id="updateCharge"  parameterType="com.allinpal.twodfireservice.draw.domain.Charge">
+		 UPDATE 2dfire.t_charge_reg
+		 <trim prefix="set" suffixOverrides=",">
+			 <if test="recordNo != null">
+	        	record_no=#{recordNo},
+	      </if>
+	      <if test="useRecordNo != null">
+	        use_record_no=#{useRecordNo},
+	      </if>
+	      <if test="acctId != null">
+	        acct_id=#{acctId},
+	      </if>
+	      <if test="curDate != null">
+	        cur_date=#{curDate},
+	      </if>
+	      <if test="baseAmount != null">
+	        base_amount=#{baseAmount},
+	      </if>
+	      <if test="serviceFee != null">
+	        service_fee=#{serviceFee},
+	      </if>
+	      <if test="serviceRate != null">
+	        service_rate=#{serviceRate},
+	      </if>
+	      <if test="managerFee != null">
+	        manager_fee=#{managerFee},
+	      </if>
+	      <if test="managerRate != null">
+	        manager_rate=#{managerRate},
+	      </if>
+	      <if test="tolamount != null">
+	        tolamount=#{tolamount},
+	      </if>
+	      <if test="deductCount != null">
+	        deduct_count=#{deductCount},
+	      </if>
+	      <if test="procState != null">
+	        proc_state=#{procState},
+	      </if>
+	      <if test="reconFlag != null">
+	        recon_flag=#{reconFlag},
+	      </if>
+	      <if test="reconTime != null">
+	        recon_time=#{reconTime},
+	      </if>
+	      <if test="remark != null">
+	        remark=#{remark},
+	      </if>
+	      <if test="createUid != null">
+	        create_uid=#{createUid},
+	      </if>
+	      <if test="createTime != null">
+	        create_time=#{createTime},
+	      </if>
+	      <if test="lastModifyUid != null">
+	        last_modify_uid=#{lastModifyUid},
+	      </if>
+	      <if test="lastModifyTime != null">
+	        last_modify_time=#{lastModifyTime},
+	      </if>
+		 </trim>
+		 WHERE record_no=#{recordNo}
+		</update>
+	<select id="getAcctNo" resultType="map">
+		select record_no from 2dfire.t_user_card
+		where acct_no=#{acctNo} limit 1
+	</select>
+	
+	<update id="updateUse"  parameterType="com.allinpal.twodfireservice.draw.domain.Draw">
+		 UPDATE 2dfire.t_loan_use_req
+		 <trim prefix="set" suffixOverrides=",">
+	      <if test="creditRecordNo != null">
+	        credit_record_no=#{creditRecordNo},
+	      </if>
+	      <if test="acctId != null">
+	        acct_id=#{acctId},
+	      </if>
+	      <if test="orgCode != null">
+	        org_code=#{orgCode},
+	      </if>
+	      <if test="prodCode != null">
+	        prod_code=#{prodCode},
+	      </if>
+	      <if test="lmtSerno != null">
+	        lmt_serno=#{lmtSerno},
+	      </if>
+	      <if test="billNo != null">
+	        bill_no=#{billNo},
+	      </if>
+	      <if test="useDate != null">
+	        use_date=#{useDate},
+	      </if>
+	      <if test="retuAcno != null">
+	        retu_acno=#{retuAcno},
+	      </if>
+	      <if test="loanCustName != null">
+	        loan_cust_name=#{loanCustName},
+	      </if>
+	      <if test="loanCerttypeName != null">
+	        loan_certtype_name=#{loanCerttypeName},
+	      </if>
+	      <if test="loanCertNo != null">
+	        loan_cert_no=#{loanCertNo},
+	      </if>
+	      <if test="loanCustAddr != null">
+	        loan_cust_addr=#{loanCustAddr},
+	      </if>
+	      <if test="loanPhone != null">
+	        loan_phone=#{loanPhone},
+	      </if>
+	      <if test="appAmt != null">
+	        app_amt=#{appAmt},
+	      </if>
+	      <if test="baseAmount != null">
+	        base_amount=#{baseAmount},
+	      </if>
+	      <if test="applTerm != null">
+	        appl_term=#{applTerm},
+	      </if>
+	      <if test="appStartDate != null">
+	        app_start_date=#{appStartDate},
+	      </if>
+	      <if test="appEndDate != null">
+	        app_end_date=#{appEndDate},
+	      </if>
+	      <if test="loanYrate != null">
+	        loan_yrate=#{loanYrate},
+	      </if>
+	      <if test="loanBalance != null">
+	        loan_balance=#{loanBalance},
+	      </if>
+	      <if test="serviceFee != null">
+	        service_fee=#{serviceFee},
+	      </if>
+	      <if test="managerFee != null">
+	        manager_fee=#{managerFee},
+	      </if>
+	      <if test="loanUse != null">
+	        loan_use=#{loanUse},
+	      </if>
+	      <if test="loanPayway != null">
+	        loan_payway=#{loanPayway},
+	      </if>
+	      <if test="loanOverupRate != null">
+	        loan_overup_rate=#{loanOverupRate},
+	      </if>
+	      <if test="useSignFlag != null">
+	        use_sign_flag=#{useSignFlag},
+	      </if>
+	      <if test="useSignTime != null">
+	        use_sign_time=#{useSignTime},
+	      </if>
+	      <if test="withholdProtocol != null">
+	        withhold_protocol=#{withholdProtocol},
+	      </if>
+	      <if test="withholdProtocolTime != null">
+	        withhold_protocol_time=#{withholdProtocolTime},
+	      </if>
+	      <if test="borrowProtocol != null">
+	        borrow_protocol=#{borrowProtocol},
+	      </if>
+	      <if test="borrowProtocolTime != null">
+	        borrow_protocol_time=#{borrowProtocolTime},
+	      </if>
+	      <if test="accessTime != null">
+	        access_time=#{accessTime},
+	      </if>
+	      <if test="status != null">
+	        status=#{status},
+	      </if>
+	      <if test="failCode != null">
+	        fail_code=#{failCode},
+	      </if>
+	      <if test="describle != null">
+	        describle=#{describle},
+	      </if>
+	      <if test="packageId != null">
+		    package_id=#{packageId},
+		  </if>
+	      <if test="createUid != null">
+	        create_uid=#{createUid},
+	      </if>
+	      <if test="createTime != null">
+	        create_time=#{createTime},
+	      </if>
+	      <if test="lastModifyUid != null">
+	        last_modify_uid=#{lastModifyUid},
+	      </if>
+	      <if test="lastModifyTime != null">
+	        last_modify_time=#{lastModifyTime},
+	      </if>
+		 </trim>
+		 WHERE 1=1
+			<if test="creditRecordNo != null">
+	        and credit_record_no=#{creditRecordNo}
+	      </if>
+	      <if test="recordNo != null">
+	        and record_no=#{recordNo}
+	      </if>
+		</update>
+		
+	<select id="queryUserInfo" resultType="map">
+        select
+        	tlb_user_oid tlbUserOid
+        from 2dfire.t_user where user_id=#{recordNo}
+    </select>
+</mapper>

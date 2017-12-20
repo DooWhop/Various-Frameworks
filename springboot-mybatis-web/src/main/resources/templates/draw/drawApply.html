@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>用款申请</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+	</head>
+
+	<body>
+		<header class="wx-bar wx-bar-nav">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">用款申请</h1>
+		</header>
+	<!-- 
+			<input id="bankAcctNo" type="hidden" th:text="${applyData.bank_acct_no}"/>
+			<input id="bankName" type="hidden" th:text="${applyData.bank_name}"/>
+			<input id="marriag" type="hidden" th:text="${applyData.marriag}"/>
+			<input id="prodCode" type="hidden" th:text="${applyData.prod_code}"/>
+			<input id="custName" type="hidden" th:text="${applyData.cust_name}"/>
+			<input id="liveCity" type="hidden" th:text="${applyData.live_city}"/>
+			<input id="protocolNum" type="hidden" th:text="${applyData.protocolNum}"/>
+			<input id="empPhone" type="hidden" th:text="${applyData.emp_phone}"/>
+			<input id="merchantNo" type="hidden" th:text="${applyData.merchant_no}"/>
+			<input id="serviceFee" type="hidden" th:text="${applyData.serviceFee}"/>
+			<input id="status" type="hidden" th:text="${applyData.status}"/>
+			<input id="certNo" type="hidden" th:text="${applyData.cert_no}"/>
+			<input id="orgCode" type="hidden" th:text="${applyData.org_code}"/>
+			<input id="liveAddr" type="hidden" th:text="${applyData.live_addr}"/>
+			<input id="bankCode" type="hidden" th:text="${applyData.bank_code}"/>
+			<input id="applyDate" type="hidden" th:text="${applyData.applyDate}"/>
+			<input id="applyDate" type="hidden" th:text="${applyData.applyDate}"/>
+			<input id="recordNo" type="hidden" th:text="${recordNo}"/>
+			<input id="mtdCde" type="hidden" value="2"/> -->
+		<form id="myForm" name='myForm' action="" method="post">
+			<div style="display:none">
+				
+				<input type="hidden" name="protocolNum" id="protocolNum" th:value="${applyData.protocolNum}"/>
+				<input type="hidden" name="applyTnr" id="applyTnr" th:value="${applyData.apply_tnr}"/>
+				<input type="hidden" name="userCode" id="userCode" th:value="${applyData.userCode}"/>
+				<input type="hidden" name="recordNo" id="recordNo" th:value="${applyData.recordNo}"/>
+				<input type="hidden" name="custName" id="custName" th:value="${applyData.cust_name}"/>
+				<input type="hidden" name="fileId" id="fileId" th:value="${applyData.fileId}"/>
+				<input type="hidden" name="prodCode" id="prodCode" th:value="${applyData.prod_code}"/>
+				<input type="hidden" name="merchantNo" id="merchantNo" th:value="${applyData.merchant_no}"/>
+				<input type="hidden" name="mobile" id="mobile" th:value="${applyData.mobile}"/>
+				<input type="hidden" name="batchNo" id="batchNo" th:value="${applyData.batchNo}"/>
+				<input type="hidden" name="useRecordNo" id="useRecordNo" th:value="${applyData.useRecordNo}"/>
+				
+				<input id="verifyCode" type="hidden" value=''/>
+			</div>
+			
+			<div class="fixBottom bgf fh1 pb20">
+				<div class="wx-btn wx-btnh" onclick="submitForm()">签约</div>
+			</div>
+			<div class="wx-content bge4">
+				<!--<div class="p20 f16 cl0">确认支用申请信息</div>-->
+				<ul class="wx-formlist mt10 bgf" style="padding-bottom: 20px;">
+					<li class="wkbox">
+						<div class="tl cl9">支用金额(元)</div>
+						<div class="autoW tr wx-input-group cl3">
+							<input type="text" name="appAmt" id="appAmt" th:value="${applyData.appl_amt}"/>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">审批状态</div>
+						<div class="autoW tr wx-input-group cl3">
+							<input type="text" name="status" id="status" th:value="${applyData.statusDesc}"/>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">申请日期</div>
+						<div class="autoW tr wx-input-group cl3">
+							<input type="text" name="appDate" id="appDate" th:value="${applyData.applyDate}"/>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">贷款期限</div>
+						<div class="autoW tr wx-input-group cl3">
+							<p id="limitDate" th:text="${applyData.limitDate}"></p>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">还款方式</div>
+						<div class="autoW tr wx-input-group cl3">
+							等额本息
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">管理费用(元)</div>
+						<div class="autoW tr cl3"><p th:text="${applyData.manageFee}"></p></div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">贷款银行卡</div>
+						<div class="autoW tr"><p th:text="${applyData.lmBank}"></p></div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">手机号码</div>
+						<div class="autoW tr">
+							<p th:text="${applyData.mobile}"></p></div>
+					</li>
+					<li class="wkbox">
+						<div class=" tl">手机验证码</div>
+						<div class="autoW tr cl3">
+							<div class="autoW tr cl3c wx-input-group">
+								<input id="captcha" type="tel" placeholder="" maxlength="4" />
+							</div>
+						</div>
+						<div class="tr cllan ml10 getSMS">立即获取</div>
+					</li>
+				</ul>
+				<div class="wx-checkbox">
+					<label>
+			      		<input type="checkbox" checked="checked"/><i></i> 阅读并同意
+			      		<a onclick="showProtocal(1)" class="cllan">《扣款授权书》</a>
+			      		<a onclick="showProtocal(2)">《征信查询上报授权书》</a>
+			      		<a onclick="showProtocal(3)" class="cllan">《贷款协议》</a>
+			    	</label>
+				</div>
+			</div>
+		</form>
+		<div class="wx-tips-noAlert">
+			<div style="width: 80px; height: 80px; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%);">
+				<img style="width: 100%; opacity: .8;" src="images/loading.gif" />
+			</div>
+		</div>
+		<script src="vendor/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script src="js/sendCode.js"></script>
+		<script>
+		var checked = false;
+		var curCount = null;
+		var count = 60;
+		var InterValObj = null;
+			$(function() {
+				$('.getSMS').click(function() {
+					if (checked) {
+						return false;
+					}
+					console.log("======curCount===" + curCount);
+					checked = true;
+					curCount = count;
+					$(".getSMS").removeClass("cllan");
+					$(".getSMS").addClass("cl9");
+					$(".getSMS").html("重新获取(" + curCount + ")");
+					InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+					$('.wx-tips-noAlert').show();				
+					console.log($("#verifycodeid").val());
+					$.ajax({
+						url : "applySendVerifyCode",
+						type : "POST",
+						data : {
+							mobile : $("#mobile").val(),
+						},
+						dataType : "json",
+						success : function(data, textStatus) {
+							console.log('data====' + JSON.stringify(data));
+							if (data.code == "000000") {
+								$('#verifyCode').val(data.verifyCode);
+							}else {
+								alert(data.response.message);
+								$('.wx-tips-noAlert').hide(); 
+								return false;
+							}
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							alert("服务器连接错误，请稍候重试。");
+							$('.wx-tips-noAlert').hide(); 
+						}
+					});	
+				})
+			})
+			function submitForm() {
+				if($('#captcha').val() == '' || $('#captcha').val().length != 4) {
+					alert('请输入4位手机验证码');
+					return false;
+				}
+				if ($('#captcha').val() != $('#verifyCode').val()){
+					alert('请输入正确手机验证码');
+					return false;
+				}
+				var checked = true;
+				$('input[type="checkbox"]').each(function() {
+					if(!$(this).is(':checked')) {
+						alert('确认前请阅读并同意相关协议');
+						checked = false;
+					}
+				})
+				if(!checked) {
+					return false;
+				}
+				var param = {
+					'appAmt': $('#appAmt').text(),
+					'status': $('#status').text(),
+					'protocolNum': $('#protocolNum').text(),
+					'timeLimit': $('#apply_tnr').text(),
+					'usercode': $('#userCode').text(),
+					'recordNo': $('#recordNo').text(),
+					'fileId': $('#fileId').text(),
+					'prodCode': $('#prodCode').text(),
+					'merchantNo': $('#merchantNo').text(),
+					'batchNo': $('#batchNo').text()
+				};
+				var str = JSON.stringify(param);
+				console.log('----' + JSON.stringify(param));
+				//window.location.href = encodeURI('/contractSign?param=' + str);
+				$("#myForm").attr("action", "contractSign");
+	      		$("#myForm").submit();
+			}
+			
+			function showProtocal(type) {
+				if (type == 1) {
+					var param = {
+							'recordNo': $('#recordNo').text()
+						};
+					var str = JSON.stringify(param);
+					//window.location.href = encodeURI('/showKKSQSProtocal?param=' + str);
+					$("#myForm").attr("action", "showKKSQSProtocal");
+		      		$("#myForm").submit();
+				} else if (type == 2) {
+					var param = {
+							'custName': $('#custName').text()
+						};
+					var str = JSON.stringify(param);
+					//window.location.href = encodeURI('/showZXCXSBSQSProtocal?param=' + str);
+					$("#myForm").attr("action", "showZXCXSBSQSProtocal");
+		      		$("#myForm").submit();
+				} else if (type == 3) {
+					$("#myForm").attr("action", "showKKHTProtocal");
+		      		$("#myForm").submit();
+				}
+			}
+			function SetRemainTime() {
+				if(curCount == 0) {
+					window.clearInterval(InterValObj); //停止计时器
+					$(".getSMS").removeClass("cl9");
+					$(".getSMS").addClass("cllan");
+					checked = false;
+					$(".getSMS").html("立即获取");
+				} else {
+					curCount--;
+					$(".getSMS").html("重新获取(" + curCount + ")");
+				}
+			}
+		</script>
+	</body>
+
+</html>

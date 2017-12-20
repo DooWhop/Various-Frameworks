@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>验证手机</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<style>
+			.captchaImg{
+				position: absolute;
+				right: 0;
+				top: 10px;
+				width: 80px;
+				height: 27px;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		<header class="wx-bar wx-bar-nav" id="header">
+			<a class="wx-action-back iconfont icon-zuojiantou wx-pull-left"></a>
+			<h1 class="wx-title">火融e</h1>
+		</header>
+		<div class="wx-content">
+			<form name='myForm' id="myForm" action="initRedirect" method="post">
+				<ul class="wx-formlist mt26">
+					<li class="wkbox">
+						<div class="tl cl9">手机号码</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="mobile" name="mobile" type="tel" placeholder="" maxlength="11" />
+							<input type="hidden" value="validateMobile" id="type" name="type" />
+							<input type="hidden" id="isExist" name="isExist" />
+							<input type="hidden" th:value="${merchantNo}" id="merchantNo" name="merchantNo" />
+							<input type="hidden"  id="userId" name="userId" />
+							<input type="hidden" id="enteraction" th:value="${enteraction}"/>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">图形验证码</div>
+						<div class="autoW tr cl3c wx-input-group">
+							<input id="captchaImg" type="tel" placeholder="请输入图中字符" maxlength="4" />
+						</div>
+						<div>
+							<span id="captchaResult" class="pl4 iconfont icon-danxuanxuanzhong cll none"></span>
+						</div>
+						<div style="width: 84px;">
+							<div class="captchaImg" id="vcodecontainer"></div>
+						</div>
+					</li>
+					<li class="wkbox">
+						<div class="tl cl9">手机验证码</div>
+						<div class="autoW tr cl3">
+							<div class="autoW tr cl3c wx-input-group">
+								<input id="captcha" type="tel" placeholder="" maxlength="4" />
+							</div>
+						</div>
+						<div class="tr cllan ml10 getSMS">立即获取</div>
+					</li>
+				</ul>
+				<div class="p20 pt10 f12 clh wkbox">
+					<span class="iconfont icon-shuoming"></span>
+					<div class="pl4"> 为提高贷款成功率，请使用贷款人本人的手机号</div>
+				</div>
+			</form>
+				<div class="wx-checkbox">
+					<label>
+					<input type="checkbox" checked="checked"/><i></i>阅读并同意
+	      			<a onclick="showProtocal()" class="cllan">《用户注册协议》</a>
+					</label>
+				</div>
+				<div class="wx-btn wx-btnh" style="" onclick="submitForm();">验 证</div>
+		</div>
+		<script src="vendor/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript" src="js/sendCode.js"></script>
+		<script type="text/javascript" src="js/vcode.js"></script>
+		<script>
+			var code;
+			onload = function () {
+	            var container = document.getElementById("vcodecontainer");
+	            code = new vCode(container, {
+	                len: 4,
+	                bgColor: "#444444",
+	                colors: [
+	                    "#DDDDDD",
+	                    "#DDFF77",
+	                    "#77DDFF",
+	                    "#99BBFF",
+	                    "#EEEE00"
+	                ]
+	            });
+	        };
+			var phoneRegex = /^\-?[0-9]{11}$/
+			$(function() {
+				$('.getSMS').click(function() {
+					if(phoneRegex.test($('#mobile').val())) {
+						if ($('#captchaImg').val().length == 4) {
+							sends.sendMessage('getCaptcha',$("#mobile").val().trim(),$("#type").val().trim());
+						}else{
+							alert("请输入正确的图形验证码")
+						}
+					} else {
+						alert("请输入正确的手机号")
+					}
+				})
+			})
+			function submitForm() {
+				if ($('#captchaImg').val().length != 4) {
+					alert("请输入正确的图形验证码");
+					return false;
+				}
+				if ($('#mobile').val() == '') {
+					alert('请输入手机号码');
+					return false;
+				}
+				if ($('#captcha').val() == '' || $('#captcha').val().length != 4) {
+					alert('请输入4位手机验证码');
+					return false;
+				}
+				var checked = true;
+				$('input[type="checkbox"]').each(function(){
+					if(!$(this).is(':checked')){
+						alert('确认前请阅读并同意相关协议');
+						checked = false;
+					}
+				})
+				if(!checked){
+					return false;
+				}
+				//ajax
+				$.ajax({
+					url : "userValidate",
+					type : "post",
+					dataType: "JSON", //数据格式:JSON
+					async:true,
+					traditional:true,
+					data : {
+						mobile : $("#mobile").val().trim(),
+						captcha : $("#captcha").val().trim(),
+						isExist : $("#isExist").val().trim(),
+						merchantNo : $("#merchantNo").val().trim(),
+						type: $("#type").val().trim()
+					},
+					dataType : "json",
+					beforeSend : function(XMLHttpRequest, object) {
+					},
+					success : function(data, textStatus) {
+						 if(data.code == "000000"){
+							  if($("#enteraction").val() == '/accountHome'){
+								  $("#myForm").attr("action", $("#enteraction").val()).submit();
+							  }else{
+								  $("#userId").attr("value",data.userId);
+						  		  $("#myForm").submit();
+							  }
+					      }else{
+					    	  alert("验证失败！");
+					      }
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert("系统异常");
+						return false;
+					},
+					complete : function(XMLHttpRequest, textStatus) {
+					}
+				});
+			}
+			
+			function showProtocal(){
+				window.location='showProtocol'
+			}
+
+			/*$('#captchaImg').on('input', function() {
+				if ($(this).val().length == 4) {
+					$('#captchaResult').removeClass('none');
+					//ajax 验证
+					if (1) {
+						$('#captchaResult').addClass('cll icon-danxuanxuanzhong');
+						$('#captchaResult').removeClass('clmh icon-shibaijieguo');
+					}else{
+						$('#captchaResult').removeClass('cll icon-danxuanxuanzhong');
+						$('#captchaResult').addClass('clmh icon-shibaijieguo');
+					}
+				}else{
+					$('#captchaResult').addClass('none');
+				}
+			})*/
+			
+		</script>
+	</body>
+
+</html>
